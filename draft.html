@@ -30,7 +30,7 @@ class: center, middle, inverse, title-slide
 
 # 데이터 분석가의 R 패키지 개발 도전기
 ### 이영록
-### 2021/11/19 (updated: 2021-08-22)
+### 2021/11/19 (updated: 2021-09-06)
 
 ---
 
@@ -45,9 +45,9 @@ class: inverse, left, middle
   - 작업 과정
 2. 데이터 분석가에게 유용한 개발자 관점
   - 프로젝트 관리
-  - R 코딩 습관
-  - 메타 프로그래밍
   - 단위 테스트
+  - 메타 프로그래밍
+  - Refactoring
 
 
 ---
@@ -109,33 +109,170 @@ class: inverse, center, middle
 # 현실적인 scope 정의
 
 - 참고교재
+
 - 실무용 아님
+
 - 제한된 유연성
 
 ---
 
 # 편리한 작업환경 선택
 
+.pull-left[
+
 - RStudio IDE
+
 - `{devtools}`, `{usethis}`, `{testthat}`, etc.
+
 - Git and GitHub
 
+]
+
+--
+
+.pull-right[
+
 &lt;div class="figure" style="text-align: center"&gt;
-&lt;img src="images/r-pkgs-cover.png" alt="R Packages / O'Reilly / Hadley Wickham" width="25%" /&gt;
+&lt;img src="images/r-pkgs-cover.png" alt="R Packages / O'Reilly / Hadley Wickham" width="40%" /&gt;
 &lt;p class="caption"&gt;R Packages / O'Reilly / Hadley Wickham&lt;/p&gt;
 &lt;/div&gt;
 
-
----
-
-# 문서 내 R 스크립트 분류
-
-- 데이터 생성 --&gt; data-raw/
-- 함수 생성 --&gt; R/
-- 데이터 분석  --&gt; vignettes/
+]
 
 
 ---
+
+# R 스크립트 분류 및 재구성
+
+- R 스크립트를 목적별로 분류하여 각 목적에 맞는 폴더에 저장
+
+.pull-left[
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/r-script-before.png" alt="작업 이전 R Markdown 파일" width="80%" /&gt;
+&lt;p class="caption"&gt;작업 이전 R Markdown 파일&lt;/p&gt;
+&lt;/div&gt;
+
+]
+
+--
+
+.pull-right[
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/r-after-data-raw.png" alt="데이터 생성: data-raw/ 폴더" width="70%" /&gt;
+&lt;p class="caption"&gt;데이터 생성: data-raw/ 폴더&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/r-after-function-r.png" alt="함수 정의: R/ 폴더" width="70%" /&gt;
+&lt;p class="caption"&gt;함수 정의: R/ 폴더&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/r-after-vignettes.png" alt="데이터 분석 문서: vignettes/ 폴더" width="70%" /&gt;
+&lt;p class="caption"&gt;데이터 분석 문서: vignettes/ 폴더&lt;/p&gt;
+&lt;/div&gt;
+
+]
+
+
+---
+
+# 함수 도움말 문서 작성
+
+- `{roxygen2}`를 이용한 함수 도움말 작성
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/r-function-manual.png" alt="함수 도움말 작성 및 컴파일된 도움말 파일" width="49%" /&gt;&lt;img src="images/r-function-manual-rendered.png" alt="함수 도움말 작성 및 컴파일된 도움말 파일" width="49%" /&gt;
+&lt;p class="caption"&gt;함수 도움말 작성 및 컴파일된 도움말 파일&lt;/p&gt;
+&lt;/div&gt;
+
+
+
+---
+
+# 단위 테스트 작성
+
+- `{testthat}`을 이용한 예제 결과 재현성 테스트
+
+.pull-left[
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/unit-test-book-example.png" alt="단위 테스트 사용할 예제" width="50%" /&gt;
+&lt;p class="caption"&gt;단위 테스트 사용할 예제&lt;/p&gt;
+&lt;/div&gt;
+
+]
+
+--
+
+.pull-right[
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/unit-test-script.png" alt="단위 테스트 작성: tests/ 폴더" width="70%" /&gt;
+&lt;p class="caption"&gt;단위 테스트 작성: tests/ 폴더&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/unit-test-result.png" alt="단위 테스트 결과" width="50%" /&gt;
+&lt;p class="caption"&gt;단위 테스트 결과&lt;/p&gt;
+&lt;/div&gt;
+
+]
+
+---
+
+# 패키지 사이트 생성 
+
+- `{pkgdown}`을 이용한 패키지 웹사이트 생성
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/pkgdown-site.gif" alt="패키지 웹사이트" width="50%" /&gt;
+&lt;p class="caption"&gt;패키지 웹사이트&lt;/p&gt;
+&lt;/div&gt;
+ 
+
+
+
+
+---
+class: inverse, center, middle
+
+# 데이터 분석가에게 유용한 개발자 관점
+
+---
+
+# 프로젝트 관리
+
+- 일관된 프로젝트 폴더 구조
+
+- Package dependency
+
+- Git
+
+
+---
+
+# 단위 테스트
+
+- 
+
+
+---
+
+# 리팩토링 (Refactoring)
+
+- 함수화
+
+- 메타 프로그래밍
+
+- 
+
+---
+
+
+
 
 # Hello World
 

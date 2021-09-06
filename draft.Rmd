@@ -24,9 +24,9 @@ class: inverse, left, middle
   - 작업 과정
 2. 데이터 분석가에게 유용한 개발자 관점
   - 프로젝트 관리
-  - R 코딩 습관
-  - 메타 프로그래밍
   - 단위 테스트
+  - 메타 프로그래밍
+  - Refactoring
 
 
 ---
@@ -92,32 +92,163 @@ class: inverse, center, middle
 # 현실적인 scope 정의
 
 - 참고교재
+
 - 실무용 아님
+
 - 제한된 유연성
 
 ---
 
 # 편리한 작업환경 선택
 
+.pull-left[
+
 - RStudio IDE
+
 - `{devtools}`, `{usethis}`, `{testthat}`, etc.
+
 - Git and GitHub
 
-```{r r-packages-book, echo = FALSE, fig.cap="R Packages / O'Reilly / Hadley Wickham", out.width='25%', fig.align='center'}
+]
+
+--
+
+.pull-right[
+
+```{r r-packages-book, echo = FALSE, fig.cap="R Packages / O'Reilly / Hadley Wickham", out.width='40%', fig.align='center'}
 knitr::include_graphics("images/r-pkgs-cover.png")
 ```
 
-
----
-
-# 문서 내 R 스크립트 분류
-
-- 데이터 생성 --> data-raw/
-- 함수 생성 --> R/
-- 데이터 분석  --> vignettes/
+]
 
 
 ---
+
+# R 스크립트 분류 및 재구성
+
+- R 스크립트를 목적별로 분류하여 각 목적에 맞는 폴더에 저장
+
+.pull-left[
+
+```{r r-script-before, echo = FALSE, fig.cap="작업 이전 R Markdown 파일", out.width='80%', fig.align='center'}
+knitr::include_graphics("images/r-script-before.png")
+```
+
+]
+
+--
+
+.pull-right[
+
+```{r r-script-after-data-raw, echo = FALSE, out.width='70%', fig.cap="데이터 생성: data-raw/ 폴더", fig.align='center'}
+knitr::include_graphics("images/r-after-data-raw.png")
+```
+
+```{r r-script-after-function-r, echo = FALSE, out.width='70%', fig.cap="함수 정의: R/ 폴더", fig.align='center'}
+knitr::include_graphics("images/r-after-function-r.png")
+```
+
+```{r r-script-after-vignettes, echo = FALSE, out.width='70%', fig.cap="데이터 분석 문서: vignettes/ 폴더", fig.align='center'}
+knitr::include_graphics("images/r-after-vignettes.png")
+```
+
+]
+
+
+---
+
+# 함수 도움말 문서 작성
+
+- `{roxygen2}`를 이용한 함수 도움말 작성
+
+```{r r-function-manual, echo = FALSE, fig.cap="함수 도움말 작성 및 컴파일된 도움말 파일", out.width='49%', fig.align='center', fig.show='hold'}
+knitr::include_graphics(c(
+  "images/r-function-manual.png",
+  "images/r-function-manual-rendered.png"
+))
+```
+
+
+
+---
+
+# 단위 테스트 작성
+
+- `{testthat}`을 이용한 예제 결과 재현성 테스트
+
+.pull-left[
+
+```{r unit-test-book-example, echo = FALSE, fig.cap="단위 테스트 사용할 예제", out.width='50%', fig.align='center'}
+knitr::include_graphics("images/unit-test-book-example.png")
+```
+
+]
+
+--
+
+.pull-right[
+
+```{r unit-test-script, echo = FALSE, out.width='70%', fig.cap="단위 테스트 작성: tests/ 폴더", fig.align='center'}
+knitr::include_graphics("images/unit-test-script.png")
+```
+
+```{r unit-test-result, echo = FALSE, out.width='50%', fig.cap="단위 테스트 결과", fig.align='center'}
+knitr::include_graphics("images/unit-test-result.png")
+```
+
+]
+
+---
+
+# 패키지 사이트 생성 
+
+- `{pkgdown}`을 이용한 패키지 웹사이트 생성
+
+```{r pkgdown-site, echo = FALSE, out.width='50%', fig.cap="패키지 웹사이트", fig.align='center'}
+knitr::include_graphics("images/pkgdown-site.gif")
+```
+ 
+
+
+
+
+---
+class: inverse, center, middle
+
+# 데이터 분석가에게 유용한 개발자 관점
+
+---
+
+# 프로젝트 관리
+
+- 일관된 프로젝트 폴더 구조
+
+- Package dependency
+
+- Git
+
+
+---
+
+# 단위 테스트
+
+- 
+
+
+---
+
+# 리팩토링 (Refactoring)
+
+- 함수화
+
+- 메타 프로그래밍
+
+- 
+
+---
+
+
+
 
 # Hello World
 
