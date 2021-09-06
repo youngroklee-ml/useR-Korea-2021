@@ -89,7 +89,7 @@ class: inverse, center, middle
 
 ---
 
-# 현실적인 scope 정의
+# 현실적인 작업범위 및 기대수준 정의
 
 - 참고교재
 
