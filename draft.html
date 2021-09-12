@@ -4,25 +4,34 @@
     <title>데이터 분석가의 R 패키지 개발 도전기</title>
     <meta charset="utf-8" />
     <meta name="author" content="이영록" />
+    <meta name="date" content="2021-11-19" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
-    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/rconf.css" type="text/css" />
+    <link rel="stylesheet" href="css/rconf-fonts.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
-class: center, middle, inverse, title-slide
+
+
+
+
+
+class: title-slide, left, bottom
 
 # 데이터 분석가의 R 패키지 개발 도전기
+----
 ### 이영록
-### 2021/11/19 (updated: 2021-09-06)
+### 2021-11-19
+
+ 
 
 ---
-
-
-
-
-
 class: inverse, left, middle
+
+# 발표 개요
+
+----
 
 1. 데이터 분석 문서화에서 패키지 개발로 전환
 
@@ -34,12 +43,12 @@ class: inverse, left, middle
 
   - 프로젝트 관리
   
-  - 단위 테스트
+  - 변화 관리
   
-  - 메타 프로그래밍
-  
-  - 리펙토링
+  - 코드의 재사용성 향상
 
+
+  
 
 ---
 class: inverse, center, middle
@@ -56,6 +65,412 @@ class: inverse, center, middle
 &lt;img src="images/book-cover.jpg" alt="데이터미아닝 기법과 응용 / 한나래출판사 / 전치혁 저" height="400px" /&gt;
 &lt;p class="caption"&gt;데이터미아닝 기법과 응용 / 한나래출판사 / 전치혁 저&lt;/p&gt;
 &lt;/div&gt;
+
+
+---
+
+# 분석 예제: 선형 분류분석
+
+.pull-left[
+
+<div id="gryddpmaoo" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#gryddpmaoo .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#gryddpmaoo .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#gryddpmaoo .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#gryddpmaoo .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#gryddpmaoo .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#gryddpmaoo .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#gryddpmaoo .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#gryddpmaoo .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#gryddpmaoo .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#gryddpmaoo .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#gryddpmaoo .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#gryddpmaoo .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#gryddpmaoo .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#gryddpmaoo .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#gryddpmaoo .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#gryddpmaoo .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#gryddpmaoo .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#gryddpmaoo .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#gryddpmaoo .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#gryddpmaoo .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#gryddpmaoo .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#gryddpmaoo .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#gryddpmaoo .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#gryddpmaoo .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#gryddpmaoo .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#gryddpmaoo .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#gryddpmaoo .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#gryddpmaoo .gt_left {
+  text-align: left;
+}
+
+#gryddpmaoo .gt_center {
+  text-align: center;
+}
+
+#gryddpmaoo .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#gryddpmaoo .gt_font_normal {
+  font-weight: normal;
+}
+
+#gryddpmaoo .gt_font_bold {
+  font-weight: bold;
+}
+
+#gryddpmaoo .gt_font_italic {
+  font-style: italic;
+}
+
+#gryddpmaoo .gt_super {
+  font-size: 65%;
+}
+
+#gryddpmaoo .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 65%;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">id</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">x1</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">x2</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">class</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_right">1</td>
+<td class="gt_row gt_right">5</td>
+<td class="gt_row gt_right">7</td>
+<td class="gt_row gt_center">1</td></tr>
+    <tr><td class="gt_row gt_right">2</td>
+<td class="gt_row gt_right">4</td>
+<td class="gt_row gt_right">3</td>
+<td class="gt_row gt_center">2</td></tr>
+    <tr><td class="gt_row gt_right">3</td>
+<td class="gt_row gt_right">7</td>
+<td class="gt_row gt_right">8</td>
+<td class="gt_row gt_center">2</td></tr>
+    <tr><td class="gt_row gt_right">4</td>
+<td class="gt_row gt_right">8</td>
+<td class="gt_row gt_right">6</td>
+<td class="gt_row gt_center">2</td></tr>
+    <tr><td class="gt_row gt_right">5</td>
+<td class="gt_row gt_right">3</td>
+<td class="gt_row gt_right">6</td>
+<td class="gt_row gt_center">1</td></tr>
+    <tr><td class="gt_row gt_right">6</td>
+<td class="gt_row gt_right">2</td>
+<td class="gt_row gt_right">5</td>
+<td class="gt_row gt_center">1</td></tr>
+    <tr><td class="gt_row gt_right">7</td>
+<td class="gt_row gt_right">6</td>
+<td class="gt_row gt_right">6</td>
+<td class="gt_row gt_center">1</td></tr>
+    <tr><td class="gt_row gt_right">8</td>
+<td class="gt_row gt_right">9</td>
+<td class="gt_row gt_right">6</td>
+<td class="gt_row gt_center">2</td></tr>
+    <tr><td class="gt_row gt_right">9</td>
+<td class="gt_row gt_right">5</td>
+<td class="gt_row gt_right">4</td>
+<td class="gt_row gt_center">2</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+
+]
+
+.pull-right[
+
+&lt;img src="draft_files/figure-html/lda-example-plot-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
 
 
 ---
@@ -77,11 +492,30 @@ class: inverse, center, middle
 
 --
 
-- 알고리즘의 단계별 결과를 교재 내용대로 보여주기 위해 함수를 세분화할 필요
+- 기존 R 패키지가 교재에 설명된 알고리즘과 정확히 일치하지 않는 부분에 대한 혼동을 줄일 필요
+
+.pull-left[
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/lda-book-example-plot.png" alt="교재 예제" width="70%" /&gt;
+&lt;p class="caption"&gt;교재 예제&lt;/p&gt;
+&lt;/div&gt;
+
+]
+
+.pull-right[
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/lda-r-example.png" alt="{MASS} 패키지 결과" width="50%" /&gt;
+&lt;p class="caption"&gt;{MASS} 패키지 결과&lt;/p&gt;
+&lt;/div&gt;
+
+]
+
 
 --
 
-- 기존 R 패키지가 교재에 설명된 알고리즘과 정확히 일치하지 않는 부분에 대한 혼동을 줄일 필요
+- 알고리즘의 단계별 결과를 교재 내용대로 보여주기 위해 함수를 세분화할 필요
 
 --
 
@@ -238,27 +672,41 @@ class: inverse, center, middle
 
 - 일관된 프로젝트 폴더 구조
 
-- Package dependency
+  + **data-raw/**: 데이터 생성/쿼리 R 스크립트 (.R)
+  
+  + **data/**: 생성된 데이터 파일 (.rda)
+  
+  + **R/**: 재사용을 위해 모듈화된 데이터 분석 함수 (.R)
+  
+  + **vignettes/**: 데이터 분석 문서 (.Rmd)
 
-- Git
+
 
 
 ---
 
-# 단위 테스트
+# 변화 관리
 
-- 
+- 단위 테스트
+  + 함수 구현의 수정, 패키지 업데이트 등의 변경사항 발생 후, 데이터 분석 결과가  옳게 나타나는지 확인하고, 오류 발생 시 빠르게 오류를 찾아 수정
+  + 단위 테스트 생성 후, 데이터 분석 함수의 수정을 보다 적극적으로 자주 수행할 수 있어 리팩토링(refactoring) 생산성 증가
+
+- 네임스페이스 명시화
+  + 함수 콜 수행 시 네임스페이스 충돌 방지
+      + `library(MASS); library(dplyr); tibble(x = 1:2, y = 2:3) %&gt;% select(x)`
+      + `library(dplyr); library(MASS); tibble(x = 1:2, y = 2:3) %&gt;% select(x)`
+      +  `dplyr::tibble(x = 1:2, y = 2:3) %&gt;% dplyr::select(x)`
+      
 
 
 ---
 
-# 리팩토링 (Refactoring)
-
-- 함수화
+# 코드의 재사용성 향상
 
 - 메타 프로그래밍
 
 - 
+
 
 ---
 
@@ -267,8 +715,9 @@ class: inverse, center, middle
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
-"highlightStyle": "github",
+"highlightStyle": "googlecode",
 "highlightLines": true,
+"highlightLanguage": "r",
 "countIncrementalSlides": false,
 "ratio": "16:9"
 });
@@ -354,6 +803,34 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   }
   preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
 })(document);</script>
+<!--Hat-tip: https://www.garrickadenbuie.com/blog/xaringan-tip-logo-all-slides/-->
+<style>
+.logo {
+  background-image: url(https://raw.githubusercontent.com/statkclee/art/gh-pages/fig/koRea_vertical_logo.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  width: 110px;
+  height: 128px;
+  z-index: 0;
+}
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"></div>';
+  });
+</script>
 
 <script>
 slideshow._releaseMath = function(el) {

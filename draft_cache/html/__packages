@@ -1,7 +1,4 @@
 base
-methods
-utils
-datasets
-grDevices
-graphics
-stats
+gt
+ggplot2
+dplyr

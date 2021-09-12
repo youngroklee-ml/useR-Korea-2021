@@ -1,23 +1,76 @@
 ---
 title: "데이터 분석가의 R 패키지 개발 도전기"
 author: "이영록"
-date: "2021/11/19 (updated: `r Sys.Date()`)"
+date: "2021-11-19"
 output:
   xaringan::moon_reader:
+    css: 
+      - [default]
+      - css/rconf.css
+      - css/rconf-fonts.css
     lib_dir: libs
+    seal: false
     nature:
-      highlightStyle: github
+      highlightStyle: googlecode
       highlightLines: true
+      highlightLanguage: ["r"]
       countIncrementalSlides: false
-      ratio: '16:9'      
+      ratio: "16:9"
+    includes:
+      after_body: [css/rconf-logo.html]
+editor_options: 
+  chunk_output_type: console
 ---
 
+```{r setup, include = FALSE}
+library(gt)
+library(ggplot2)
+library(dplyr)
 
-```{r setup, include=FALSE}
-options(htmltools.dir.version = FALSE)
+options(
+  htmltools.dir.version = FALSE, 
+  htmltools.preserve.raw = FALSE,
+  tibble.width = 60, tibble.print_min = 6,
+  crayon.enabled = TRUE
+)
+
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  comment = "",
+  digits = 3,
+  tidy = FALSE,
+  prompt = FALSE,
+  fig.align = 'center',
+  # fig.width = 7.252,
+  # fig.height = 4,
+  dpi = 600
+)
+
+# uncomment the following lines if you want to use the NHS-R theme colours by default
+# scale_fill_continuous <- partial(scale_fill_nhs, discrete = FALSE)
+# scale_fill_discrete <- partial(scale_fill_nhs, discrete = TRUE)
+# scale_colour_continuous <- partial(scale_colour_nhs, discrete = FALSE)
+# scale_colour_discrete <- partial(scale_colour_nhs, discrete = TRUE)
 ```
 
+
+class: title-slide, left, bottom
+
+# `r rmarkdown::metadata$title`
+----
+### `r rmarkdown::metadata$author`
+### `r rmarkdown::metadata$date`
+
+ 
+
+---
 class: inverse, left, middle
+
+# 발표 개요
+
+----
 
 1. 데이터 분석 문서화에서 패키지 개발로 전환
 
@@ -29,12 +82,12 @@ class: inverse, left, middle
 
   - 프로젝트 관리
   
-  - 단위 테스트
+  - 변화 관리
   
-  - 메타 프로그래밍
-  
-  - 리펙토링
+  - 코드의 재사용성 향상
 
+
+  
 
 ---
 class: inverse, center, middle
@@ -50,6 +103,54 @@ class: inverse, center, middle
 ```{r book, echo = FALSE, fig.cap="데이터미아닝 기법과 응용 / 한나래출판사 / 전치혁 저", out.height='400px', fig.align='center'}
 knitr::include_graphics("images/book-cover.jpg")
 ```
+
+
+---
+
+# 분석 예제: 선형 분류분석
+
+.pull-left[
+
+```{r lda-example, echo=FALSE, out.width='49%', fig.align='center', fig.show='hold'}
+data(binaryclass2, package = "dmtr")
+
+binaryclass2 %>% 
+  gt::gt()
+```
+
+]
+
+.pull-right[
+
+```{r lda-example-plot, echo=FALSE, out.width='90%', fig.align='center'}
+binaryclass2 %>% 
+  ggplot(aes(x = x1, y = x2, color = class)) +
+  geom_abline(slope = 0.9781, intercept = 0.3414, 
+              color = "grey20", linetype = "dashed") +
+  geom_point(size = 5) +
+  geom_text(aes(label = class), vjust = -1, size = 5) +
+  scale_x_continuous(
+    breaks = seq(1, 10, by = 1),
+    minor_breaks = NULL,
+    expand = expansion(mult = 0.05)
+  ) +
+  scale_y_continuous(
+    breaks = seq(1, 10, by = 1),
+    minor_breaks = NULL,
+    expand = expansion(mult = 0.05)
+  ) +
+  scale_color_manual(
+    values = c(`1` = "steelblue", `2` = "firebrick")
+  ) +
+  theme_light() +
+  theme(
+    legend.position = "none",
+    text = element_text(size = 20),
+    aspect.ratio = 1
+  )
+```
+
+]
 
 
 ---
@@ -76,11 +177,28 @@ knitr::include_graphics("images/onlinebook-main.jpg")
 
 --
 
-- 알고리즘의 단계별 결과를 교재 내용대로 보여주기 위해 함수를 세분화할 필요
+- 기존 R 패키지가 교재에 설명된 알고리즘과 정확히 일치하지 않는 부분에 대한 혼동을 줄일 필요
+
+.pull-left[
+
+```{r lda-book-example, echo = FALSE, fig.cap="교재 예제", out.width='70%', fig.align='center'}
+knitr::include_graphics("images/lda-book-example-plot.png")
+```
+
+]
+
+.pull-right[
+
+```{r lda-r-example, echo = FALSE, out.width='50%', fig.cap="{MASS} 패키지 결과", fig.align='center'}
+knitr::include_graphics("images/lda-r-example.png")
+```
+
+]
+
 
 --
 
-- 기존 R 패키지가 교재에 설명된 알고리즘과 정확히 일치하지 않는 부분에 대한 혼동을 줄일 필요
+- 알고리즘의 단계별 결과를 교재 내용대로 보여주기 위해 함수를 세분화할 필요
 
 --
 
@@ -230,27 +348,41 @@ class: inverse, center, middle
 
 - 일관된 프로젝트 폴더 구조
 
-- Package dependency
+  + **data-raw/**: 데이터 생성/쿼리 R 스크립트 (.R)
+  
+  + **data/**: 생성된 데이터 파일 (.rda)
+  
+  + **R/**: 재사용을 위해 모듈화된 데이터 분석 함수 (.R)
+  
+  + **vignettes/**: 데이터 분석 문서 (.Rmd)
 
-- Git
+
 
 
 ---
 
-# 단위 테스트
+# 변화 관리
 
-- 
+- 단위 테스트
+  + 함수 구현의 수정, 패키지 업데이트 등의 변경사항 발생 후, 데이터 분석 결과가  옳게 나타나는지 확인하고, 오류 발생 시 빠르게 오류를 찾아 수정
+  + 단위 테스트 생성 후, 데이터 분석 함수의 수정을 보다 적극적으로 자주 수행할 수 있어 리팩토링(refactoring) 생산성 증가
+
+- 네임스페이스 명시화
+  + 함수 콜 수행 시 네임스페이스 충돌 방지
+      + `library(MASS); library(dplyr); tibble(x = 1:2, y = 2:3) %>% select(x)`
+      + `library(dplyr); library(MASS); tibble(x = 1:2, y = 2:3) %>% select(x)`
+      +  `dplyr::tibble(x = 1:2, y = 2:3) %>% dplyr::select(x)`
+      
 
 
 ---
 
-# 리팩토링 (Refactoring)
-
-- 함수화
+# 코드의 재사용성 향상
 
 - 메타 프로그래밍
 
 - 
+
 
 ---
 
