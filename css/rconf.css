@@ -67,7 +67,7 @@ hr {
 .remark-code, .remark-inline-code {
   font-size:          90%;
   font-weight:        400;
-  color:              #231F20;
+  /* color:              #231F20; */
   background:         #E8EDEE;
   border-radius:      3px;
   padding:            1px 1px 1px 1px;

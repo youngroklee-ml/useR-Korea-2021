@@ -26,6 +26,7 @@ editor_options:
 library(gt)
 library(ggplot2)
 library(dplyr)
+library(dmtr)
 
 options(
   htmltools.dir.version = FALSE, 
@@ -98,12 +99,31 @@ class: inverse, center, middle
 
 ---
 
-# 데이터마이닝 기법과 응용
+# `{bookdown}`을 이용한 R 예제 책 만들기
+
+.pull-left[
 
 ```{r book, echo = FALSE, fig.cap="데이터미아닝 기법과 응용 / 한나래출판사 / 전치혁 저", out.height='400px', fig.align='center'}
 knitr::include_graphics("images/book-cover.jpg")
 ```
 
+]
+
+.pull-right[
+
+```{r online-book-webshot, include=FALSE, cache=TRUE}
+webshot::webshot(
+  url = "https://youngroklee-ml.github.io/data-mining-book/index.html",
+  file = "images/onlinebook-main.jpg",
+  zoom = 3
+)
+```
+
+```{r online-book, echo = FALSE, fig.cap="데이터마이닝 with R / 전치혁, 이혜선, 이종석, 이영록 / http://youngroklee-ml.github.io/data-mining-book/", out.height='400px', fig.align='center'}
+knitr::include_graphics("images/onlinebook-main.jpg")
+```
+
+]
 
 ---
 
@@ -154,58 +174,127 @@ binaryclass2 %>%
 
 
 ---
-
-# `{bookdown}`을 이용한 R 예제 책 만들기
-
-```{r online-book-webshot, include=FALSE, cache=TRUE}
-webshot::webshot(
-  url = "https://youngroklee-ml.github.io/data-mining-book/index.html",
-  file = "images/onlinebook-main.jpg",
-  zoom = 3
-)
-```
-
-
-```{r online-book, echo = FALSE, fig.cap="데이터마이닝 with R / Published with bookdown / 전치혁, 이혜선, 이종석, 이영록 공저", out.height='400px', fig.align='center'}
-knitr::include_graphics("images/onlinebook-main.jpg")
-```
-
-
----
+layout: true
 
 # 교재용 R 패키지 작성의 필요성
 
---
-
-- 기존 R 패키지가 교재에 설명된 알고리즘과 정확히 일치하지 않는 부분에 대한 혼동을 줄일 필요
+- 알고리즘의 단계별 결과를 교재 내용대로 보여주기 위해 함수를 세분화할 필요
 
 .pull-left[
 
-```{r lda-book-example, echo = FALSE, fig.cap="교재 예제", out.width='70%', fig.align='center'}
-knitr::include_graphics("images/lda-book-example-plot.png")
+```{r book-covarince, echo = FALSE, fig.cap="교재 예제", out.width='80%', fig.align='center'}
+knitr::include_graphics("images/book-covariance.png")
 ```
 
 ]
+
+---
 
 .pull-right[
 
-```{r lda-r-example, echo = FALSE, out.width='50%', fig.cap="{MASS} 패키지 결과", fig.align='center'}
-knitr::include_graphics("images/lda-r-example.png")
+```{r lda-mass-summary, echo = TRUE, out.width='50%', fig.cap="{MASS} 패키지 결과", fig.align='center'}
+library(MASS)
+MASS::lda(class ~ x1 + x2, data = binaryclass2)
 ```
 
 ]
 
+---
+
+.pull-right[
+
+```{r lda-dmtr-group-variance, echo = TRUE}
+library(dmtr)
+group_variance(binaryclass2, class, x1:x2)
+```
+
+]
+
+---
+
+.pull-right[
+
+```{r lda-dmtr-pooled-variance, echo = TRUE}
+library(dmtr)
+pooled_variance(binaryclass2, class, x1:x2)
+```
+
+]
+
+---
+layout: true
+
+# 교재용 R 패키지 작성의 필요성
+
+- 기존 R 패키지 수행 결과가 교재의 예제와 정확히 일치하지 않는 부분에 대한 혼동을 줄일 필요
+
+```{r lda-book-example, echo = FALSE, fig.cap="교재 예제", out.width='50%', fig.align='center'}
+knitr::include_graphics("images/lda-book-example-function.png")
+```
+
+---
 
 --
 
-- 알고리즘의 단계별 결과를 교재 내용대로 보여주기 위해 함수를 세분화할 필요
+```{r lda-mass-result, echo = TRUE, out.width='50%', fig.cap="{MASS} 패키지 결과", fig.align='center'}
+fit <- MASS::lda(class ~ x1 + x2, data = binaryclass2)
+coef(fit) %>% drop()
+```
 
 --
 
-- 사용된 기존 R 패키지의 버전업에 따른 교재의 R 스크립트 수정을 줄일 필요
+```{r lda-mass-result-transform, echo = TRUE, out.width='50%', fig.cap="{MASS} 패키지 결과 변환", fig.align='center'}
+scaling_adjust <- 2.201359; sign_adjust <- -1;
+(coef(fit) * scaling_adjust * sign_adjust) %>% drop()
+```
+
+
+---
+
+```{r lda-dmtr-result, echo = TRUE}
+dmtr::fisher_ld(binaryclass2, class, x1:x2)
+```
+
+
+---
+layout: false
+
+# 교재용 R 패키지 작성의 필요성
+
+- 분석 알고리즘을 교재와 일치하도록 함수로 구현
+
+```r
+fisher_ld <- function(.data, .group_var, .xvar) {
+  .group_var <- rlang::enquo(.group_var)
+  .xvar <- rlang::enquo(.xvar)
+
+* mu_hat <- group_mean(.data, !!.group_var, !!.xvar)
+
+  if (length(mu_hat) != 2L) {
+    stop("number of levels of .group_var must be 2.")
+  }
+
+* sigma_hat <- pooled_variance(.data, !!.group_var, !!.xvar)
+
+* res <- solve(sigma_hat) %*% purrr::reduce(mu_hat, `-`) %>% drop()
+
+  attr(res, "group") <- attr(mu_hat, "group")
+
+  return(res)
+}
+```
+
+```{r, include=FALSE}
+detach("package:MASS", character.only = TRUE)
+```
+
+
+
+
 
 ---
 class: inverse, center, middle
+layout: false
 
 # 데이터 분석 문서화에서 패키지 개발로 전환
 
@@ -248,39 +337,105 @@ knitr::include_graphics("images/r-pkgs-cover.png")
 
 
 ---
+layout: true
 
 # R 스크립트 분류 및 재구성
 
+---
+
 - R 스크립트를 목적별로 분류하여 각 목적에 맞는 폴더에 저장
+  + 데이터 생성: data-raw/ 폴더에 .R 파일로 저장
+  + 함수 정의: R/ 폴더에 .R 파일로 저장
+  + 데이터 분석: vignettes/ 폴더에 .Rmd 파일로 저장
 
-.pull-left[
+```r
+binaryclass2 <- tibble::tibble(
+  id = c(1:9),
+  x1 = c(5, 4, 7, 8, 3, 2, 6, 9, 5),
+  x2 = c(7, 3, 8, 6, 6, 5, 6, 6, 4),
+  class = factor(c(1, 2, 2, 2, 1, 1, 1, 2, 2), levels = c(1, 2))
+)
 
-```{r r-script-before, echo = FALSE, fig.cap="작업 이전 R Markdown 파일", out.width='80%', fig.align='center'}
-knitr::include_graphics("images/r-script-before.png")
+group_mean <- function(.data, .group_var, .xvar) {...}
+pooled_variance <- function(.data, .group_var, .xvar) {...}
+fisher_ld <- function(.data, .group_var, .xvar) {...}
+
+w_hat <- fisher_ld(binaryclass2, class, c(x1, x2))
+print(w_hat)
 ```
-
-]
-
---
-
-.pull-right[
-
-```{r r-script-after-data-raw, echo = FALSE, out.width='70%', fig.cap="데이터 생성: data-raw/ 폴더", fig.align='center'}
-knitr::include_graphics("images/r-after-data-raw.png")
-```
-
-```{r r-script-after-function-r, echo = FALSE, out.width='70%', fig.cap="함수 정의: R/ 폴더", fig.align='center'}
-knitr::include_graphics("images/r-after-function-r.png")
-```
-
-```{r r-script-after-vignettes, echo = FALSE, out.width='70%', fig.cap="데이터 분석 문서: vignettes/ 폴더", fig.align='center'}
-knitr::include_graphics("images/r-after-vignettes.png")
-```
-
-]
-
 
 ---
+
+- R 스크립트를 목적별로 분류하여 각 목적에 맞는 폴더에 저장
+  + **데이터 생성: data-raw/ 폴더에 .R 파일로 저장**
+  + 함수 정의: R/ 폴더에 .R 파일로 저장
+  + 데이터 분석: vignettes/ 폴더에 .Rmd 파일로 저장
+
+```r
+*binaryclass2 <- tibble::tibble(
+* id = c(1:9),
+* x1 = c(5, 4, 7, 8, 3, 2, 6, 9, 5),
+* x2 = c(7, 3, 8, 6, 6, 5, 6, 6, 4),
+* class = factor(c(1, 2, 2, 2, 1, 1, 1, 2, 2), levels = c(1, 2))
+*)
+
+group_mean <- function(.data, .group_var, .xvar) {...}
+pooled_variance <- function(.data, .group_var, .xvar) {...}
+fisher_ld <- function(.data, .group_var, .xvar) {...}
+
+w_hat <- fisher_ld(binaryclass2, class, c(x1, x2))
+print(w_hat)
+```
+
+---
+
+- R 스크립트를 목적별로 분류하여 각 목적에 맞는 폴더에 저장
+  + 데이터 생성: data-raw/ 폴더에 .R 파일로 저장
+  + **함수 정의: R/ 폴더에 .R 파일로 저장**
+  + 데이터 분석: vignettes/ 폴더에 .Rmd 파일로 저장
+
+
+```r
+binaryclass2 <- tibble::tibble(
+  id = c(1:9),
+  x1 = c(5, 4, 7, 8, 3, 2, 6, 9, 5),
+  x2 = c(7, 3, 8, 6, 6, 5, 6, 6, 4),
+  class = factor(c(1, 2, 2, 2, 1, 1, 1, 2, 2), levels = c(1, 2))
+)
+
+*group_mean <- function(.data, .group_var, .xvar) {...}
+*pooled_variance <- function(.data, .group_var, .xvar) {...}
+*fisher_ld <- function(.data, .group_var, .xvar) {...}
+
+w_hat <- fisher_ld(binaryclass2, class, c(x1, x2))
+print(w_hat)
+```
+
+---
+
+- R 스크립트를 목적별로 분류하여 각 목적에 맞는 폴더에 저장
+  + 데이터 생성: data-raw/ 폴더에 .R 파일로 저장
+  + 함수 정의: R/ 폴더에 .R 파일로 저장
+  + **데이터 분석: vignettes/ 폴더에 .Rmd 파일로 저장**
+
+```r
+binaryclass2 <- tibble::tibble(
+  id = c(1:9),
+  x1 = c(5, 4, 7, 8, 3, 2, 6, 9, 5),
+  x2 = c(7, 3, 8, 6, 6, 5, 6, 6, 4),
+  class = factor(c(1, 2, 2, 2, 1, 1, 1, 2, 2), levels = c(1, 2))
+)
+
+group_mean <- function(.data, .group_var, .xvar) {...}
+pooled_variance <- function(.data, .group_var, .xvar) {...}
+fisher_ld <- function(.data, .group_var, .xvar) {...}
+
+*w_hat <- fisher_ld(binaryclass2, class, c(x1, x2))
+*print(w_hat)
+```
+
+---
+layout: false
 
 # 함수 도움말 문서 작성
 
@@ -354,8 +509,9 @@ class: inverse, center, middle
   
   + **R/**: 재사용을 위해 모듈화된 데이터 분석 함수 (.R)
   
-  + **vignettes/**: 데이터 분석 문서 (.Rmd)
+  + **vignettes/**: 데이터 분석 문서 소스 (.Rmd)
 
+  + **doc/**: 배포용 데이터 분석 문서 (.html)
 
 
 
