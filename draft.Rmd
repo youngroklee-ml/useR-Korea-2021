@@ -437,29 +437,30 @@ fisher_ld <- function(.data, .group_var, .xvar) {...}
 ---
 layout: false
 
-# 함수 도움말 문서 작성
-
-- `{roxygen2}`를 이용한 함수 도움말 작성
-
-```{r r-function-manual, echo = FALSE, fig.cap="함수 도움말 작성 및 컴파일된 도움말 파일", out.width='49%', fig.align='center', fig.show='hold'}
-knitr::include_graphics(c(
-  "images/r-function-manual.png",
-  "images/r-function-manual-rendered.png"
-))
-```
-
-
-
----
-
-# 단위 테스트 작성
-
-- `{testthat}`을 이용한 예제 결과 재현성 테스트
+# `{roxygen2}`를 이용한 함수 도움말 문서 작성
 
 .pull-left[
 
-```{r unit-test-book-example, echo = FALSE, fig.cap="단위 테스트 사용할 예제", out.width='50%', fig.align='center'}
-knitr::include_graphics("images/unit-test-book-example.png")
+```r
+#' 피셔 선형 판별 함수.
+#'
+#' 두 범주 데이터를 구분하는 피셔 선형 판별함수의 계수를 추정한다.
+#'
+#' @param .data 관측 데이터 프레임.
+#' @param .group_var 범주변수.
+#' @param .xvar 범주 분류에 사용될 변수.
+#' @return 선형 함수의 계수 벡터.
+#'
+#' @examples
+#' data(binaryclass2, package = "dmtr")
+#' fisher_ld(binaryclass2, class, c(x1, x2))
+#'
+#' @keywords discriminant-functions
+#' @export
+fisher_ld <- function(.data, .group_var, .xvar) {
+  ...
+}
+
 ```
 
 ]
@@ -468,15 +469,39 @@ knitr::include_graphics("images/unit-test-book-example.png")
 
 .pull-right[
 
-```{r unit-test-script, echo = FALSE, out.width='70%', fig.cap="단위 테스트 작성: tests/ 폴더", fig.align='center'}
-knitr::include_graphics("images/unit-test-script.png")
-```
-
-```{r unit-test-result, echo = FALSE, out.width='50%', fig.cap="단위 테스트 결과", fig.align='center'}
-knitr::include_graphics("images/unit-test-result.png")
+```{r r-function-manual, echo = FALSE, fig.cap="함수 도움말 작성 및 컴파일된 도움말 파일 (.Rd)", out.width='90%', fig.align='center'}
+knitr::include_graphics("images/r-function-manual-fisher_ld.png")
 ```
 
 ]
+
+
+
+---
+
+# `{testthat}`을 이용한 단위 테스트 작성
+
+- 예제 결과 재현성 테스트
+
+```{r lda-book-example-2, echo = FALSE, fig.cap="교재 예제", out.width='50%', fig.align='center'}
+knitr::include_graphics("images/lda-book-example-function.png")
+```
+
+--
+
+```{r lda-test, echo = TRUE}
+library(testthat); library(dmtr);
+test_that("Fisher discriminant function matches", {
+  local_edition(3)
+  expect_equal(
+    fisher_ld(binaryclass2, class, c(x1, x2)), #<<
+    c(x1 = -1.5080, x2 = 1.5418), #<<
+    tolerance = 1e-3,
+    ignore_attr = TRUE
+  )
+})
+```
+
 
 ---
 

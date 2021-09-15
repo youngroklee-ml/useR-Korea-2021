@@ -817,29 +817,31 @@ fisher_ld &lt;- function(.data, .group_var, .xvar) {...}
 ---
 layout: false
 
-# 함수 도움말 문서 작성
-
-- `{roxygen2}`를 이용한 함수 도움말 작성
-
-&lt;div class="figure" style="text-align: center"&gt;
-&lt;img src="images/r-function-manual.png" alt="함수 도움말 작성 및 컴파일된 도움말 파일" width="49%" /&gt;&lt;img src="images/r-function-manual-rendered.png" alt="함수 도움말 작성 및 컴파일된 도움말 파일" width="49%" /&gt;
-&lt;p class="caption"&gt;함수 도움말 작성 및 컴파일된 도움말 파일&lt;/p&gt;
-&lt;/div&gt;
-
-
-
----
-
-# 단위 테스트 작성
-
-- `{testthat}`을 이용한 예제 결과 재현성 테스트
+# `{roxygen2}`를 이용한 함수 도움말 문서 작성
 
 .pull-left[
 
-&lt;div class="figure" style="text-align: center"&gt;
-&lt;img src="images/unit-test-book-example.png" alt="단위 테스트 사용할 예제" width="50%" /&gt;
-&lt;p class="caption"&gt;단위 테스트 사용할 예제&lt;/p&gt;
-&lt;/div&gt;
+```r
+#' 피셔 선형 판별 함수.
+#'
+#' 두 범주 데이터를 구분하는 피셔 선형 판별함수의 계수를 추정한다.
+#'
+#' @param .data 관측 데이터 프레임.
+#' @param .group_var 범주변수.
+#' @param .xvar 범주 분류에 사용될 변수.
+#' @return 선형 함수의 계수 벡터.
+#'
+#' @examples
+#' data(binaryclass2, package = "dmtr")
+#' fisher_ld(binaryclass2, class, c(x1, x2))
+#'
+#' @keywords discriminant-functions
+#' @export
+fisher_ld &lt;- function(.data, .group_var, .xvar) {
+  ...
+}
+
+```
 
 ]
 
@@ -848,16 +850,45 @@ layout: false
 .pull-right[
 
 &lt;div class="figure" style="text-align: center"&gt;
-&lt;img src="images/unit-test-script.png" alt="단위 테스트 작성: tests/ 폴더" width="70%" /&gt;
-&lt;p class="caption"&gt;단위 테스트 작성: tests/ 폴더&lt;/p&gt;
-&lt;/div&gt;
-
-&lt;div class="figure" style="text-align: center"&gt;
-&lt;img src="images/unit-test-result.png" alt="단위 테스트 결과" width="50%" /&gt;
-&lt;p class="caption"&gt;단위 테스트 결과&lt;/p&gt;
+&lt;img src="images/r-function-manual-fisher_ld.png" alt="함수 도움말 작성 및 컴파일된 도움말 파일 (.Rd)" width="90%" /&gt;
+&lt;p class="caption"&gt;함수 도움말 작성 및 컴파일된 도움말 파일 (.Rd)&lt;/p&gt;
 &lt;/div&gt;
 
 ]
+
+
+
+---
+
+# `{testthat}`을 이용한 단위 테스트 작성
+
+- 예제 결과 재현성 테스트
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/lda-book-example-function.png" alt="교재 예제" width="50%" /&gt;
+&lt;p class="caption"&gt;교재 예제&lt;/p&gt;
+&lt;/div&gt;
+
+--
+
+
+```r
+library(testthat); library(dmtr);
+test_that("Fisher discriminant function matches", {
+  local_edition(3)
+  expect_equal(
+*   fisher_ld(binaryclass2, class, c(x1, x2)),
+*   c(x1 = -1.5080, x2 = 1.5418),
+    tolerance = 1e-3,
+    ignore_attr = TRUE
+  )
+})
+```
+
+```
+[32mTest passed[39m 😸
+```
+
 
 ---
 
