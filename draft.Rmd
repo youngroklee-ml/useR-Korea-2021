@@ -103,7 +103,7 @@ class: inverse, center, middle
 
 .pull-left[
 
-```{r book, echo = FALSE, fig.cap="데이터미아닝 기법과 응용 / 한나래출판사 / 전치혁 저", out.height='400px', fig.align='center'}
+```{r book, echo = FALSE, fig.cap="데이터마이닝 기법과 응용 / 한나래출판사 / 전치혁 저", out.height='400px', fig.align='center'}
 knitr::include_graphics("images/book-cover.jpg")
 ```
 
