@@ -12,5 +12,5 @@ h1, h2, h3 {
 }
 
 .remark-code, .remark-inline-code {
-  font-family: 'Fira Code', monospace;
+  font-family: 'Fira Code', 'Nanum Gothic Coding', monospace;
 }

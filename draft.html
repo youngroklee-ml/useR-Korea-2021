@@ -16,7 +16,6 @@
 
 
 
-
 class: title-slide, left, bottom
 
 # 데이터 분석가의 R 패키지 개발 도전기
@@ -24,7 +23,10 @@ class: title-slide, left, bottom
 ### 이영록
 ### 2021-11-19
 
- 
+&lt;STYLE type='text/css' scoped&gt;
+PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
+&lt;/STYLE&gt;
+
 
 ---
 class: inverse, left, middle
@@ -884,9 +886,8 @@ test_that("Fisher discriminant function matches", {
 })
 ```
 
-```
-[32mTest passed[39m 😸
-```
+&lt;PRE class="fansi fansi-output"&gt;&lt;CODE&gt;&lt;span style='color: #00BB00;'&gt;Test passed&lt;/span&gt; 😸
+&lt;/CODE&gt;&lt;/PRE&gt;
 
 
 ---
@@ -924,26 +925,93 @@ class: inverse, center, middle
   + **vignettes/**: 데이터 분석 문서 소스 (.Rmd)
 
   + **doc/**: 배포용 데이터 분석 문서 (.html)
+  
+  + **tests/**: 단위 테스트 (.R)
 
 
 
 ---
+layout: true
 
 # 변화 관리
+---
 
 - 단위 테스트
-  + 함수 구현의 수정, 패키지 업데이트 등의 변경사항 발생 후, 데이터 분석 결과가  옳게 나타나는지 확인하고, 오류 발생 시 빠르게 오류를 찾아 수정
-  + 단위 테스트 생성 후, 데이터 분석 함수의 수정을 보다 적극적으로 자주 수행할 수 있어 리팩토링(refactoring) 생산성 증가
 
-- 네임스페이스 명시화
-  + 함수 콜 수행 시 네임스페이스 충돌 방지
-      + `library(MASS); library(dplyr); tibble(x = 1:2, y = 2:3) %&gt;% select(x)`
-      + `library(dplyr); library(MASS); tibble(x = 1:2, y = 2:3) %&gt;% select(x)`
-      +  `dplyr::tibble(x = 1:2, y = 2:3) %&gt;% dplyr::select(x)`
-      
+  + 함수 구현의 수정, 패키지 업데이트 등의 변경사항 발생 후, 데이터 분석 결과가  옳게 나타나는지 확인하고, 오류 발생 시 빠르게 오류를 찾아 수정
+  
+  + 단위 테스트 생성 후, 데이터 분석 함수의 수정을 보다 적극적으로 자주 수행할 수 있어 리팩토링(refactoring) 생산성 증가
 
 
 ---
+
+- 네임스페이스 명시화
+
+  + 함수 콜 수행 시 prefix 사용, `package::function()`
+
+.pull-left[
+
+
+
+```r
+library(MASS)
+library(dplyr)
+tibble(x = 1:2, y = 2:3) %&gt;% 
+  select(x)
+```
+
+&lt;PRE class="fansi fansi-output"&gt;&lt;CODE&gt;&lt;span style='color: #555555;'&gt;# A tibble: 2 × 1&lt;/span&gt;
+      x
+  &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;int&amp;gt;&lt;/span&gt;
+&lt;span style='color: #555555;'&gt;1&lt;/span&gt;     1
+&lt;span style='color: #555555;'&gt;2&lt;/span&gt;     2
+&lt;/CODE&gt;&lt;/PRE&gt;
+]
+
+--
+
+.pull-right[
+
+
+
+```r
+library(dplyr)
+library(MASS)
+tibble(x = 1:2, y = 2:3) %&gt;% 
+  select(x)
+```
+
+```
+Error in select(., x): unused argument (x)
+```
+]
+
+---
+
+- 네임스페이스 명시화
+
+  + 함수 콜 수행 시 prefix 사용, `package::function()`
+
+
+
+
+
+
+```r
+dplyr::tibble(x = 1:2, y = 2:3) %&gt;% 
+  dplyr::select(x)
+```
+
+&lt;PRE class="fansi fansi-output"&gt;&lt;CODE&gt;&lt;span style='color: #555555;'&gt;# A tibble: 2 × 1&lt;/span&gt;
+      x
+  &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;int&amp;gt;&lt;/span&gt;
+&lt;span style='color: #555555;'&gt;1&lt;/span&gt;     1
+&lt;span style='color: #555555;'&gt;2&lt;/span&gt;     2
+&lt;/CODE&gt;&lt;/PRE&gt;
+
+
+---
+layout: false
 
 # 코드의 재사용성 향상
 
