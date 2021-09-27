@@ -87,7 +87,7 @@ class: inverse, left, middle
   
   - 코드의 재사용성 향상
 
-
+3. 맺음말
   
 
 ---
@@ -194,7 +194,7 @@ knitr::include_graphics("images/book-covariance.png")
 
 ```{r lda-mass-summary, echo = TRUE}
 library(MASS)
-MASS::lda(class ~ x1 + x2, data = binaryclass2)
+MASS::lda(class ~ x1 + x2, binaryclass2)
 ```
 
 ]
@@ -324,8 +324,6 @@ layout: false
 - Git and GitHub
 
 ]
-
---
 
 .pull-right[
 
@@ -542,23 +540,39 @@ class: inverse, center, middle
 
 
 ---
+
+# 코드 테스트
+
+.pull-left[
+- 리팩토링(refactoring) 생산성 증가
+
+- R 버전 및 패키지 업데이트에 따른 이상 유무 확인
+
+- One is better than nothing
+]
+
+.pull-right[
+
+```{r refactoring-book, echo = FALSE, fig.cap="Refactoring: improving the design of existing code / Addison-Wesley Professional / Martin Fowler", out.width='40%', fig.align='center'}
+knitr::include_graphics("images/refact2.jpeg")
+```
+
+]
+
+
+
+
+---
 layout: true
 
-# 변화 관리
----
-
-- 단위 테스트
-
-  + 함수 구현의 수정, 패키지 업데이트 등의 변경사항 발생 후, 데이터 분석 결과가  옳게 나타나는지 확인하고, 오류 발생 시 빠르게 오류를 찾아 수정
-  
-  + 단위 테스트 생성 후, 데이터 분석 함수의 수정을 보다 적극적으로 자주 수행할 수 있어 리팩토링(refactoring) 생산성 증가
-
+# 코드 모호성 제거
 
 ---
+- 네임스페이스 명시화 / `package::function()`
 
-- 네임스페이스 명시화
+  + 패키지 로드 순서에 따라 결과가 달라지거나 오류 발생하는 문제 
 
-  + 함수 콜 수행 시 prefix 사용, `package::function()`
+--
 
 .pull-left[
 ```{r}
@@ -570,7 +584,7 @@ detach(package:dplyr)
 library(MASS)
 library(dplyr)
 tibble(x = 1:2, y = 2:3) %>% 
-  select(x, y)
+  select(x)
 ```
 ]
 
@@ -586,16 +600,16 @@ detach(package:dplyr)
 library(dplyr)
 library(MASS)
 tibble(x = 1:2, y = 2:3) %>% 
-  select(x, y)
+  select(x)
 ```
 ]
 
 ---
+- 네임스페이스 명시화 / `package::function()`
 
-- 네임스페이스 명시화
+  + 어떤 패키지의 함수를 사용할 것인지 명시화
 
-  + 함수 콜 수행 시 prefix 사용, `package::function()`
-
+--
 
 ```{r}
 detach(package:MASS)
@@ -604,9 +618,40 @@ detach(package:MASS)
 
 ```{r namespace-3, echo=TRUE, error=TRUE}
 dplyr::tibble(x = 1:2, y = 2:3) %>% 
-  dplyr::select(x, y)
+  dplyr::select(x)
 ```
 
+
+---
+- 네임스페이스 명시화 / `package::function()`
+
+  + 코드를 이해하기 쉽도록 도움
+
+--
+
+.pull-left[
+```{r, echo=TRUE, message=FALSE}
+library(dmtr)
+library(corrr)
+library(dplyr)
+binaryclass2 %>% 
+  select(x1, x2) %>% 
+  correlate()
+```
+]
+
+--
+
+.pull-right[
+```{r, echo=TRUE, message=FALSE}
+library(dmtr)
+library(dplyr)
+binaryclass2 %>% 
+  select(x1, x2) %>% 
+  corrr::correlate()
+```
+
+]  
 
 ---
 layout: false
@@ -615,9 +660,60 @@ layout: false
 
 - 메타 프로그래밍
 
-- 
+  + 하드코딩 지양
+  
+  + **tidy eval** 프레임워크 활용
+
+```r
+fisher_ld <- function(.data, .group_var, .xvar) {
+* .group_var <- rlang::enquo(.group_var)
+* .xvar <- rlang::enquo(.xvar)
+* mu_hat <- group_mean(.data, !!.group_var, !!.xvar)
+
+  if (length(mu_hat) != 2L) {
+    stop("number of levels of .group_var must be 2.")
+  }
+
+* sigma_hat <- pooled_variance(.data, !!.group_var, !!.xvar)
+
+  res <- solve(sigma_hat) %*% purrr::reduce(mu_hat, `-`) %>% drop()
+  attr(res, "group") <- attr(mu_hat, "group")
+  return(res)
+}
+
+* fisher_ld(binaryclass2, class, c(x1, x2))
+```
 
 
 ---
+class: inverse, center, middle
+
+# 맺음말
+
+---
+
+# 데이터 분석가에게 패키지 개발이란?
+
+- 분석 과정 및 결과의 배포
+
+  + 데이터, 분석 코드, 리포트 등
+  
+  + 재현가능성 검증
+  
+- 생산성 향상을 위한 배움의 과정
+
+  + 프로젝트 관리
+  
+  + 코드 테스트
+  
+  + 코딩 스타일
+
+- 경험의 축적이 중요
+
+  + 쉬운 목표 설정
+
+  + 기존에 수행한 가장 간단한 분석 프로젝트로 시작
+  
+  + 하나의 함수부터 시작
 
 

@@ -49,7 +49,7 @@ class: inverse, left, middle
   
   - 코드의 재사용성 향상
 
-
+3. 맺음말
   
 
 ---
@@ -512,7 +512,7 @@ layout: true
 
 ```r
 library(MASS)
-MASS::lda(class ~ x1 + x2, data = binaryclass2)
+MASS::lda(class ~ x1 + x2, binaryclass2)
 ```
 
 ```
@@ -705,8 +705,6 @@ layout: false
 - Git and GitHub
 
 ]
-
---
 
 .pull-right[
 
@@ -931,23 +929,40 @@ class: inverse, center, middle
 
 
 ---
+
+# 코드 테스트
+
+.pull-left[
+- 리팩토링(refactoring) 생산성 증가
+
+- R 버전 및 패키지 업데이트에 따른 이상 유무 확인
+
+- One is better than nothing
+]
+
+.pull-right[
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/refact2.jpeg" alt="Refactoring: improving the design of existing code / Addison-Wesley Professional / Martin Fowler" width="40%" /&gt;
+&lt;p class="caption"&gt;Refactoring: improving the design of existing code / Addison-Wesley Professional / Martin Fowler&lt;/p&gt;
+&lt;/div&gt;
+
+]
+
+
+
+
+---
 layout: true
 
-# 변화 관리
----
-
-- 단위 테스트
-
-  + 함수 구현의 수정, 패키지 업데이트 등의 변경사항 발생 후, 데이터 분석 결과가  옳게 나타나는지 확인하고, 오류 발생 시 빠르게 오류를 찾아 수정
-  
-  + 단위 테스트 생성 후, 데이터 분석 함수의 수정을 보다 적극적으로 자주 수행할 수 있어 리팩토링(refactoring) 생산성 증가
-
+# 코드 모호성 제거
 
 ---
+- 네임스페이스 명시화 / `package::function()`
 
-- 네임스페이스 명시화
+  + 패키지 로드 순서에 따라 결과가 달라지거나 오류 발생하는 문제 
 
-  + 함수 콜 수행 시 prefix 사용, `package::function()`
+--
 
 .pull-left[
 
@@ -987,11 +1002,11 @@ Error in select(., x): unused argument (x)
 ]
 
 ---
+- 네임스페이스 명시화 / `package::function()`
 
-- 네임스페이스 명시화
+  + 어떤 패키지의 함수를 사용할 것인지 명시화
 
-  + 함수 콜 수행 시 prefix 사용, `package::function()`
-
+--
 
 
 
@@ -1011,17 +1026,114 @@ dplyr::tibble(x = 1:2, y = 2:3) %&gt;%
 
 
 ---
+- 네임스페이스 명시화 / `package::function()`
+
+  + 코드를 이해하기 쉽도록 도움
+
+--
+
+.pull-left[
+
+```r
+library(dmtr)
+library(corrr)
+library(dplyr)
+binaryclass2 %&gt;% 
+  select(x1, x2) %&gt;% 
+  correlate()
+```
+
+&lt;PRE class="fansi fansi-output"&gt;&lt;CODE&gt;&lt;span style='color: #555555;'&gt;# A tibble: 2 × 3&lt;/span&gt;
+  term      x1     x2
+  &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;chr&amp;gt;&lt;/span&gt;  &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;dbl&amp;gt;&lt;/span&gt;  &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;dbl&amp;gt;&lt;/span&gt;
+&lt;span style='color: #555555;'&gt;1&lt;/span&gt; x1    &lt;span style='color: #BB0000;'&gt;NA&lt;/span&gt;      0.411
+&lt;span style='color: #555555;'&gt;2&lt;/span&gt; x2     0.411 &lt;span style='color: #BB0000;'&gt;NA&lt;/span&gt;    
+&lt;/CODE&gt;&lt;/PRE&gt;
+]
+
+--
+
+.pull-right[
+
+```r
+library(dmtr)
+library(dplyr)
+binaryclass2 %&gt;% 
+  select(x1, x2) %&gt;% 
+  corrr::correlate()
+```
+
+&lt;PRE class="fansi fansi-output"&gt;&lt;CODE&gt;&lt;span style='color: #555555;'&gt;# A tibble: 2 × 3&lt;/span&gt;
+  term      x1     x2
+  &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;chr&amp;gt;&lt;/span&gt;  &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;dbl&amp;gt;&lt;/span&gt;  &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;dbl&amp;gt;&lt;/span&gt;
+&lt;span style='color: #555555;'&gt;1&lt;/span&gt; x1    &lt;span style='color: #BB0000;'&gt;NA&lt;/span&gt;      0.411
+&lt;span style='color: #555555;'&gt;2&lt;/span&gt; x2     0.411 &lt;span style='color: #BB0000;'&gt;NA&lt;/span&gt;    
+&lt;/CODE&gt;&lt;/PRE&gt;
+
+]  
+
+---
 layout: false
 
 # 코드의 재사용성 향상
 
 - 메타 프로그래밍
 
-- 
+  + 하드코딩 지양
+  
+  + **tidy eval** 프레임워크 활용
+
+```r
+fisher_ld &lt;- function(.data, .group_var, .xvar) {
+* .group_var &lt;- rlang::enquo(.group_var)
+* .xvar &lt;- rlang::enquo(.xvar)
+* mu_hat &lt;- group_mean(.data, !!.group_var, !!.xvar)
+
+  if (length(mu_hat) != 2L) {
+    stop("number of levels of .group_var must be 2.")
+  }
+
+* sigma_hat &lt;- pooled_variance(.data, !!.group_var, !!.xvar)
+
+  res &lt;- solve(sigma_hat) %*% purrr::reduce(mu_hat, `-`) %&gt;% drop()
+  attr(res, "group") &lt;- attr(mu_hat, "group")
+  return(res)
+}
+
+* fisher_ld(binaryclass2, class, c(x1, x2))
+```
 
 
 ---
+class: inverse, center, middle
 
+# 맺음말
+
+---
+
+# 데이터 분석가에게 패키지 개발이란?
+
+- 분석 과정 및 결과의 배포
+
+  + 데이터, 분석 코드, 리포트 등
+  
+  + 재현가능성 검증
+  
+- 생산성 향상을 위한 배움의 과정
+
+  + 프로젝트 관리
+  
+  + 코드 테스트
+  
+  + 코딩 스타일
+
+- 경험의 축적이 중요
+
+  + 기존에 수행한 가장 간단한 분석 프로젝트로 시작
+  
+  + 하나의 함수부터 시작
+  
+  + 
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
