@@ -153,7 +153,7 @@ blockquote {
 
 /*-- NHS organisation logo --*/
 .title-slide {
-  background-image:    url(https://raw.githubusercontent.com/statkclee/art/gh-pages/fig/koRea_vertical_logo.png);
+  background-image:    url(../images/R-logo-grey--crop.png);
   background-position: 95% 10%;
   background-size:     300px;
 }
