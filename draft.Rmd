@@ -77,6 +77,8 @@ class: inverse, left, middle
 
   - 배경
   
+  - 동기
+  
   - 작업 과정
   
 2. 데이터 분석가에게 유용한 개발자 관점
@@ -98,8 +100,8 @@ class: inverse, center, middle
 ## 배경
 
 ---
-
-# `{bookdown}`을 이용한 R 예제 책 만들기
+class: middle
+layout: true
 
 .pull-left[
 
@@ -109,7 +111,80 @@ knitr::include_graphics("images/book-cover.jpg")
 
 ]
 
+---
+
+---
+
 .pull-right[
+
+- 데이터 마이닝 알고리즘을 잘 이해할 수 있게 깔끔하게 구성된 교재
+
+]
+
+---
+
+.pull-right[
+
+- 데이터 마이닝 알고리즘을 잘 이해할 수 있게 깔끔하게 구성된 교재
+
+- 단순히 기존 패키지를 사용하는 것보다 깊이 있는 내용을 제공
+
+]
+
+---
+
+.pull-right[
+
+- 데이터 마이닝 알고리즘을 잘 이해할 수 있게 깔끔하게 구성된 교재
+
+- 단순히 기존 패키지를 사용하는 것보다 깊이 있는 내용을 제공
+
+- 간단하면서 결과를 눈으로 확인할 수 있는 예제들
+
+]
+
+---
+
+.pull-right[
+
+- 데이터 마이닝 알고리즘을 잘 이해할 수 있게 깔끔하게 구성된 교재
+
+- 단순히 기존 패키지를 사용하는 것보다 깊이 있는 내용을 제공
+
+- 간단하면서 결과를 눈으로 확인할 수 있는 예제들
+
+- **.red[예제 결과 도출을 위한 프로그램 구현은 제공되지 않음]**
+
+]
+
+
+---
+class: middle
+layout: false
+
+
+.pull-left[
+
+```{r rlogo, out.width="70%"}
+knitr::include_graphics(c("images/Rlogo.png"))
+```
+
+]
+
+.pull-right[
+
+```{r bookdownlogo, out.width="70%"}
+knitr::include_graphics(c("images/bookdown-logo.png"))
+```
+
+]
+
+
+---
+class: middle
+layout: true
+
+.pull-left[
 
 ```{r online-book-webshot, include=FALSE, cache=TRUE}
 webshot::webshot(
@@ -126,6 +201,37 @@ knitr::include_graphics("images/onlinebook-main.jpg")
 ]
 
 ---
+
+---
+
+.pull-right[
+
+- 교재를 온라인 버전으로 전환
+
+]
+
+---
+
+.pull-right[
+
+- 온라인 버전 보조 교재로 활용
+
+- 예제를 R로 구현한 내용을 추가
+
+]
+
+
+---
+class: inverse, center, middle
+layout: false
+
+# 데이터 분석 문서화에서 패키지 개발로 전환
+
+## 동기
+
+
+---
+layout: false
 
 # 분석 예제: 선형 분류분석
 
