@@ -80,7 +80,10 @@ layout: true
 
 .pull-right[
 
-- 데이터 마이닝 알고리즘을 잘 이해할 수 있게 깔끔하게 구성된 교재
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="draft_files/figure-html/lda-example-plot-1.png" alt="예제: 선형 분류분석" width="80%" /&gt;
+&lt;p class="caption"&gt;예제: 선형 분류분석&lt;/p&gt;
+&lt;/div&gt;
 
 ]
 
@@ -89,36 +92,25 @@ layout: true
 .pull-right[
 
 - 데이터 마이닝 알고리즘을 잘 이해할 수 있게 깔끔하게 구성된 교재
-
-- 단순히 기존 패키지를 사용하는 것보다 깊이 있는 내용을 제공
+{{content}}
 
 ]
 
----
-
-.pull-right[
-
-- 데이터 마이닝 알고리즘을 잘 이해할 수 있게 깔끔하게 구성된 교재
+--
 
 - 단순히 기존 패키지를 사용하는 것보다 깊이 있는 내용을 제공
+{{content}}
+
+--
 
 - 간단하면서 결과를 눈으로 확인할 수 있는 예제들
+{{content}}
 
-]
+--
 
----
+- **예제 결과 도출을 위한 프로그램 구현은 제공되지 않음**
+{{content}}
 
-.pull-right[
-
-- 데이터 마이닝 알고리즘을 잘 이해할 수 있게 깔끔하게 구성된 교재
-
-- 단순히 기존 패키지를 사용하는 것보다 깊이 있는 내용을 제공
-
-- 간단하면서 결과를 눈으로 확인할 수 있는 예제들
-
-- **.red[예제 결과 도출을 위한 프로그램 구현은 제공되지 않음]**
-
-]
 
 
 ---
@@ -141,7 +133,6 @@ layout: false
 
 ---
 class: middle
-layout: true
 
 .pull-left[
 
@@ -154,25 +145,35 @@ layout: true
 
 ]
 
----
-
----
-
 .pull-right[
-
-- 교재를 온라인 버전으로 전환
-
+  {{content}}
 ]
 
----
-
-.pull-right[
+--
 
 - 온라인 버전 보조 교재로 활용
+{{content}}
+
+--
 
 - 예제를 R로 구현한 내용을 추가
+{{content}}
 
-]
+--
+
+- 기존 R 패키지가 제공하지 않는 세부 결과 도출과정을 구현
+{{content}}
+
+--
+
+- 기존 R 패키지가 교재 설명과는 다른 알고리즘 사용한 경우에 대한 추가 설명
+{{content}}
+
+---
+class: middle
+
+&lt;img src="images/bookdown-folder.png" width="50%" style="display: block; margin: auto;" /&gt;
+
 
 
 ---
@@ -185,591 +186,220 @@ layout: false
 
 
 ---
-layout: false
+class: middle, center
 
-# 분석 예제: 선형 분류분석
+# 사용자 함수의 난립
 
-.pull-left[
+---
+class: middle
 
-<div id="fcazuasfnz" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
-}
+.left-column[
 
-#fcazuasfnz .gt_table {
-  display: table;
-  border-collapse: collapse;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#fcazuasfnz .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#fcazuasfnz .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#fcazuasfnz .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#fcazuasfnz .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#fcazuasfnz .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#fcazuasfnz .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#fcazuasfnz .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#fcazuasfnz .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#fcazuasfnz .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#fcazuasfnz .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#fcazuasfnz .gt_group_heading {
-  padding: 8px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#fcazuasfnz .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#fcazuasfnz .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#fcazuasfnz .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#fcazuasfnz .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#fcazuasfnz .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 12px;
-}
-
-#fcazuasfnz .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#fcazuasfnz .gt_first_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-}
-
-#fcazuasfnz .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#fcazuasfnz .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#fcazuasfnz .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#fcazuasfnz .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#fcazuasfnz .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#fcazuasfnz .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding: 4px;
-}
-
-#fcazuasfnz .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#fcazuasfnz .gt_sourcenote {
-  font-size: 90%;
-  padding: 4px;
-}
-
-#fcazuasfnz .gt_left {
-  text-align: left;
-}
-
-#fcazuasfnz .gt_center {
-  text-align: center;
-}
-
-#fcazuasfnz .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#fcazuasfnz .gt_font_normal {
-  font-weight: normal;
-}
-
-#fcazuasfnz .gt_font_bold {
-  font-weight: bold;
-}
-
-#fcazuasfnz .gt_font_italic {
-  font-style: italic;
-}
-
-#fcazuasfnz .gt_super {
-  font-size: 65%;
-}
-
-#fcazuasfnz .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
-  font-size: 65%;
-}
-</style>
-<table class="gt_table">
-  
-  <thead class="gt_col_headings">
-    <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">id</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">x1</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">x2</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">class</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td class="gt_row gt_right">1</td>
-<td class="gt_row gt_right">5</td>
-<td class="gt_row gt_right">7</td>
-<td class="gt_row gt_center">1</td></tr>
-    <tr><td class="gt_row gt_right">2</td>
-<td class="gt_row gt_right">4</td>
-<td class="gt_row gt_right">3</td>
-<td class="gt_row gt_center">2</td></tr>
-    <tr><td class="gt_row gt_right">3</td>
-<td class="gt_row gt_right">7</td>
-<td class="gt_row gt_right">8</td>
-<td class="gt_row gt_center">2</td></tr>
-    <tr><td class="gt_row gt_right">4</td>
-<td class="gt_row gt_right">8</td>
-<td class="gt_row gt_right">6</td>
-<td class="gt_row gt_center">2</td></tr>
-    <tr><td class="gt_row gt_right">5</td>
-<td class="gt_row gt_right">3</td>
-<td class="gt_row gt_right">6</td>
-<td class="gt_row gt_center">1</td></tr>
-    <tr><td class="gt_row gt_right">6</td>
-<td class="gt_row gt_right">2</td>
-<td class="gt_row gt_right">5</td>
-<td class="gt_row gt_center">1</td></tr>
-    <tr><td class="gt_row gt_right">7</td>
-<td class="gt_row gt_right">6</td>
-<td class="gt_row gt_right">6</td>
-<td class="gt_row gt_center">1</td></tr>
-    <tr><td class="gt_row gt_right">8</td>
-<td class="gt_row gt_right">9</td>
-<td class="gt_row gt_right">6</td>
-<td class="gt_row gt_center">2</td></tr>
-    <tr><td class="gt_row gt_right">9</td>
-<td class="gt_row gt_right">5</td>
-<td class="gt_row gt_right">4</td>
-<td class="gt_row gt_center">2</td></tr>
-  </tbody>
-  
-  
-</table>
-</div>
+&lt;img src="images/rmd_image.png" width="80%" style="display: block; margin: auto;" /&gt;
 
 ]
 
 .pull-right[
 
-&lt;img src="draft_files/figure-html/lda-example-plot-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+{{content}}
 
 ]
 
+--
+
+데이터 생성
+{{content}}
+
+--
+
+**함수 1**
+{{content}}
+
+--
+
+**함수 2**
+{{content}}
+
+--
+
+분석
+{{content}}
+
+--
+
+**함수 3**
+{{content}}
+
+--
+
+분석
+{{content}}
+
+--
+
+데이터 생성
+{{content}}
+
+--
+
+**함수 4**
+{{content}}
+
+--
+
+**함수 5**
+{{content}}
+
+--
+
+데이터 분석
+{{content}}
+
+--
+
+**...**
+{{content}}
+
 
 ---
-layout: true
-
-# 교재용 R 패키지 작성의 필요성
-
-- 알고리즘의 단계별 결과를 교재 내용대로 보여주기 위해 함수를 세분화할 필요
+class: middle
 
 .pull-left[
 
-&lt;div class="figure" style="text-align: center"&gt;
-&lt;img src="images/book-covariance.png" alt="교재 예제" width="80%" /&gt;
-&lt;p class="caption"&gt;교재 예제&lt;/p&gt;
-&lt;/div&gt;
+&lt;img src="images/bookdown-folder.png" width="80%" style="display: block; margin: auto;" /&gt;
 
 ]
 
----
+--
 
 .pull-right[
+
+&lt;img src="images/rick-mason-2FaCKyEEtis-unsplash.jpg" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+class: middle, center
+
+# 지금은 맞고, 나중엔 틀릴수도?
+
+---
+class: middle
+
+.pull-left[
 
 
 ```r
+library(dplyr)
+
+data(binaryclass2, package = "dmtr")
+
+binaryclass2 %&gt;% 
+* select(x1, x2)
+```
+
+&lt;PRE class="fansi fansi-output"&gt;&lt;CODE&gt;&lt;span style='color: #555555;'&gt;# A tibble: 9 × 2&lt;/span&gt;
+     x1    x2
+  &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;dbl&amp;gt;&lt;/span&gt; &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;dbl&amp;gt;&lt;/span&gt;
+&lt;span style='color: #555555;'&gt;1&lt;/span&gt;     5     7
+&lt;span style='color: #555555;'&gt;2&lt;/span&gt;     4     3
+&lt;span style='color: #555555;'&gt;3&lt;/span&gt;     7     8
+&lt;span style='color: #555555;'&gt;4&lt;/span&gt;     8     6
+&lt;span style='color: #555555;'&gt;5&lt;/span&gt;     3     6
+&lt;span style='color: #555555;'&gt;6&lt;/span&gt;     2     5
+&lt;span style='color: #555555;'&gt;7&lt;/span&gt;     6     6
+&lt;span style='color: #555555;'&gt;8&lt;/span&gt;     9     6
+&lt;span style='color: #555555;'&gt;9&lt;/span&gt;     5     4
+&lt;/CODE&gt;&lt;/PRE&gt;
+
+]
+
+--
+
+.pull-right[
+
+
+
+```r
+library(dplyr)
+
+data(binaryclass2, package = "dmtr")
+
 library(MASS)
-MASS::lda(class ~ x1 + x2, binaryclass2)
+fit &lt;- lda(class ~ x1 + x2, binaryclass2)
+
+binaryclass2 %&gt;% 
+* select(x1, x2)
 ```
 
 ```
-Call:
-lda(class ~ x1 + x2, data = binaryclass2)
-
-Prior probabilities of groups:
-        1         2 
-0.4444444 0.5555556 
-
-Group means:
-   x1  x2
-1 4.0 6.0
-2 6.6 5.4
-
-Coefficients of linear discriminants:
-          LD1
-x1  0.6850490
-x2 -0.7003859
+Error in select(., x1, x2): unused arguments (x1, x2)
 ```
+
+
 
 ]
 
 ---
+class: middle
 
-.pull-right[
+.pull-left[
 
+**`{tidyr}` 0.x**
 
 ```r
-library(dmtr)
-group_variance(binaryclass2, class, x1:x2)
+df &lt;- tibble(
+ a = list(c("a", "b"), "c"),
+ b = list(1:2, 3),
+ c = c(11, 22)
+)
+* df %&gt;% tidyr::unnest(a, b)
 ```
 
-```
-[[1]]
-         x1        x2
-x1 3.333333 1.0000000
-x2 1.000000 0.6666667
-
-[[2]]
-     x1   x2
-x1 4.30 2.95
-x2 2.95 3.80
-
-attr(,"group")
-[1] 1 2
-Levels: 1 2
-```
+&lt;PRE class="fansi fansi-output"&gt;&lt;CODE&gt;&lt;span style='color: #555555;'&gt;# A tibble: 3 × 3&lt;/span&gt;
+      c a         b
+  &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;dbl&amp;gt;&lt;/span&gt; &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;chr&amp;gt;&lt;/span&gt; &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;dbl&amp;gt;&lt;/span&gt;
+&lt;span style='color: #555555;'&gt;1&lt;/span&gt;    11 a         1
+&lt;span style='color: #555555;'&gt;2&lt;/span&gt;    11 b         2
+&lt;span style='color: #555555;'&gt;3&lt;/span&gt;    22 c         3
+&lt;/CODE&gt;&lt;/PRE&gt;
 
 ]
-
----
-
-.pull-right[
-
-
-```r
-library(dmtr)
-pooled_variance(binaryclass2, class, x1:x2)
-```
-
-```
-         x1       x2
-x1 3.885714 2.114286
-x2 2.114286 2.457143
-```
-
-]
-
----
-layout: true
-
-# 교재용 R 패키지 작성의 필요성
-
-- 기존 R 패키지 수행 결과가 교재의 예제와 정확히 일치하지 않는 부분에 대한 혼동을 줄일 필요
-
-&lt;div class="figure" style="text-align: center"&gt;
-&lt;img src="images/lda-book-example-function.png" alt="교재 예제" width="50%" /&gt;
-&lt;p class="caption"&gt;교재 예제&lt;/p&gt;
-&lt;/div&gt;
-
----
 
 --
 
+.pull-right[
 
-```r
-fit &lt;- MASS::lda(class ~ x1 + x2, data = binaryclass2)
-coef(fit) %&gt;% drop()
-```
-
-```
-        x1         x2 
- 0.6850490 -0.7003859 
-```
-
---
+**`{tidyr}` 1.0.0**
 
 
 ```r
-scaling_adjust &lt;- 2.201359; sign_adjust &lt;- -1;
-(coef(fit) * scaling_adjust * sign_adjust) %&gt;% drop()
+df &lt;- tibble(
+ a = list(c("a", "b"), "c"),
+ b = list(1:2, 3),
+ c = c(11, 22)
+)
+*df %&gt;% tidyr::unnest(c(a, b))
 ```
 
-```
-       x1        x2 
--1.508039  1.541801 
-```
+&lt;PRE class="fansi fansi-output"&gt;&lt;CODE&gt;&lt;span style='color: #555555;'&gt;# A tibble: 3 × 3&lt;/span&gt;
+  a         b     c
+  &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;chr&amp;gt;&lt;/span&gt; &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;dbl&amp;gt;&lt;/span&gt; &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;dbl&amp;gt;&lt;/span&gt;
+&lt;span style='color: #555555;'&gt;1&lt;/span&gt; a         1    11
+&lt;span style='color: #555555;'&gt;2&lt;/span&gt; b         2    11
+&lt;span style='color: #555555;'&gt;3&lt;/span&gt; c         3    22
+&lt;/CODE&gt;&lt;/PRE&gt;
 
+
+]
 
 ---
+class: middle
 
+- 오류 발생 시 수정에 많은 시간 소요 
 
-```r
-dmtr::fisher_ld(binaryclass2, class, x1:x2)
-```
-
-```
-       x1        x2 
--1.508039  1.541801 
-attr(,"group")
-[1] 1 2
-Levels: 1 2
-```
-
-
----
-layout: false
-
-# 교재용 R 패키지 작성의 필요성
-
-- 분석 알고리즘을 교재와 일치하도록 함수로 구현
-
-```r
-fisher_ld &lt;- function(.data, .group_var, .xvar) {
-  .group_var &lt;- rlang::enquo(.group_var)
-  .xvar &lt;- rlang::enquo(.xvar)
-
-* mu_hat &lt;- group_mean(.data, !!.group_var, !!.xvar)
-
-  if (length(mu_hat) != 2L) {
-    stop("number of levels of .group_var must be 2.")
-  }
-
-* sigma_hat &lt;- pooled_variance(.data, !!.group_var, !!.xvar)
-
-* res &lt;- solve(sigma_hat) %*% purrr::reduce(mu_hat, `-`) %&gt;% drop()
-
-  attr(res, "group") &lt;- attr(mu_hat, "group")
-
-  return(res)
-}
-```
-
-
+- 코드 실행 오류는 없으나 결과가 틀린 경우는 오류 발견 자체가 어려움
 
 
 
@@ -986,7 +616,7 @@ test_that("Fisher discriminant function matches", {
 })
 ```
 
-&lt;PRE class="fansi fansi-output"&gt;&lt;CODE&gt;&lt;span style='color: #00BB00;'&gt;Test passed&lt;/span&gt; 😸
+&lt;PRE class="fansi fansi-output"&gt;&lt;CODE&gt;&lt;span style='color: #00BB00;'&gt;Test passed&lt;/span&gt; 🎊
 &lt;/CODE&gt;&lt;/PRE&gt;
 
 
@@ -1064,54 +694,12 @@ layout: true
 
   + 패키지 로드 순서에 따라 결과가 달라지거나 오류 발생하는 문제 
 
---
-
-.pull-left[
-
-
-
-```r
-library(MASS)
-library(dplyr)
-tibble(x = 1:2, y = 2:3) %&gt;% 
-  select(x)
-```
-
-&lt;PRE class="fansi fansi-output"&gt;&lt;CODE&gt;&lt;span style='color: #555555;'&gt;# A tibble: 2 × 1&lt;/span&gt;
-      x
-  &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;int&amp;gt;&lt;/span&gt;
-&lt;span style='color: #555555;'&gt;1&lt;/span&gt;     1
-&lt;span style='color: #555555;'&gt;2&lt;/span&gt;     2
-&lt;/CODE&gt;&lt;/PRE&gt;
-]
-
---
-
-.pull-right[
-
-
-
-```r
-library(dplyr)
-library(MASS)
-tibble(x = 1:2, y = 2:3) %&gt;% 
-  select(x)
-```
-
-```
-Error in select(., x): unused argument (x)
-```
-]
-
 ---
 - 네임스페이스 명시화 / `package::function()`
 
   + 어떤 패키지의 함수를 사용할 것인지 명시화
 
 --
-
-
-
 
 
 ```r

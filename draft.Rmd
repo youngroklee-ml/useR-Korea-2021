@@ -117,138 +117,9 @@ knitr::include_graphics("images/book-cover.jpg")
 
 .pull-right[
 
-- 데이터 마이닝 알고리즘을 잘 이해할 수 있게 깔끔하게 구성된 교재
-
-]
-
----
-
-.pull-right[
-
-- 데이터 마이닝 알고리즘을 잘 이해할 수 있게 깔끔하게 구성된 교재
-
-- 단순히 기존 패키지를 사용하는 것보다 깊이 있는 내용을 제공
-
-]
-
----
-
-.pull-right[
-
-- 데이터 마이닝 알고리즘을 잘 이해할 수 있게 깔끔하게 구성된 교재
-
-- 단순히 기존 패키지를 사용하는 것보다 깊이 있는 내용을 제공
-
-- 간단하면서 결과를 눈으로 확인할 수 있는 예제들
-
-]
-
----
-
-.pull-right[
-
-- 데이터 마이닝 알고리즘을 잘 이해할 수 있게 깔끔하게 구성된 교재
-
-- 단순히 기존 패키지를 사용하는 것보다 깊이 있는 내용을 제공
-
-- 간단하면서 결과를 눈으로 확인할 수 있는 예제들
-
-- **.red[예제 결과 도출을 위한 프로그램 구현은 제공되지 않음]**
-
-]
-
-
----
-class: middle
-layout: false
-
-
-.pull-left[
-
-```{r rlogo, out.width="70%"}
-knitr::include_graphics(c("images/Rlogo.png"))
-```
-
-]
-
-.pull-right[
-
-```{r bookdownlogo, out.width="70%"}
-knitr::include_graphics(c("images/bookdown-logo.png"))
-```
-
-]
-
-
----
-class: middle
-layout: true
-
-.pull-left[
-
-```{r online-book-webshot, include=FALSE, cache=TRUE}
-webshot::webshot(
-  url = "https://youngroklee-ml.github.io/data-mining-book/index.html",
-  file = "images/onlinebook-main.jpg",
-  zoom = 3
-)
-```
-
-```{r online-book, echo = FALSE, fig.cap="데이터마이닝 with R / 전치혁, 이혜선, 이종석, 이영록 / http://youngroklee-ml.github.io/data-mining-book/", out.height='400px', fig.align='center'}
-knitr::include_graphics("images/onlinebook-main.jpg")
-```
-
-]
-
----
-
----
-
-.pull-right[
-
-- 교재를 온라인 버전으로 전환
-
-]
-
----
-
-.pull-right[
-
-- 온라인 버전 보조 교재로 활용
-
-- 예제를 R로 구현한 내용을 추가
-
-]
-
-
----
-class: inverse, center, middle
-layout: false
-
-# 데이터 분석 문서화에서 패키지 개발로 전환
-
-## 동기
-
-
----
-layout: false
-
-# 분석 예제: 선형 분류분석
-
-.pull-left[
-
-```{r lda-example, echo=FALSE, out.width='49%', fig.align='center', fig.show='hold'}
+```{r lda-example-plot, echo=FALSE, out.width='80%', fig.align='center', fig.cap="예제: 선형 분류분석"}
 data(binaryclass2, package = "dmtr")
 
-binaryclass2 %>% 
-  gt::gt()
-```
-
-]
-
-.pull-right[
-
-```{r lda-example-plot, echo=FALSE, out.width='90%', fig.align='center'}
 binaryclass2 %>% 
   ggplot(aes(x = x1, y = x2, color = class)) +
   geom_abline(slope = 0.9781, intercept = 0.3414, 
@@ -278,121 +149,312 @@ binaryclass2 %>%
 
 ]
 
+---
+
+.pull-right[
+
+- 데이터 마이닝 알고리즘을 잘 이해할 수 있게 깔끔하게 구성된 교재
+{{content}}
+
+]
+
+--
+
+- 단순히 기존 패키지를 사용하는 것보다 깊이 있는 내용을 제공
+{{content}}
+
+--
+
+- 간단하면서 결과를 눈으로 확인할 수 있는 예제들
+{{content}}
+
+--
+
+- **예제 결과 도출을 위한 프로그램 구현은 제공되지 않음**
+{{content}}
+
+
 
 ---
-layout: true
+class: middle
+layout: false
 
-# 교재용 R 패키지 작성의 필요성
-
-- 알고리즘의 단계별 결과를 교재 내용대로 보여주기 위해 함수를 세분화할 필요
 
 .pull-left[
 
-```{r book-covarince, echo = FALSE, fig.cap="교재 예제", out.width='80%', fig.align='center'}
-knitr::include_graphics("images/book-covariance.png")
+```{r rlogo, out.width="70%"}
+knitr::include_graphics(c("images/Rlogo.png"))
 ```
 
 ]
-
----
 
 .pull-right[
 
-```{r lda-mass-summary, echo = TRUE}
-library(MASS)
-MASS::lda(class ~ x1 + x2, binaryclass2)
+```{r bookdownlogo, out.width="70%"}
+knitr::include_graphics(c("images/bookdown-logo.png"))
 ```
 
 ]
 
+
 ---
+class: middle
+
+.pull-left[
+
+```{r online-book-webshot, include=FALSE, cache=TRUE}
+webshot::webshot(
+  url = "https://youngroklee-ml.github.io/data-mining-book/index.html",
+  file = "images/onlinebook-main.jpg",
+  zoom = 3
+)
+```
+
+```{r online-book, echo = FALSE, fig.cap="데이터마이닝 with R / 전치혁, 이혜선, 이종석, 이영록 / http://youngroklee-ml.github.io/data-mining-book/", out.height='400px', fig.align='center'}
+knitr::include_graphics("images/onlinebook-main.jpg")
+```
+
+]
 
 .pull-right[
-
-```{r lda-dmtr-group-variance, echo = TRUE}
-library(dmtr)
-group_variance(binaryclass2, class, x1:x2)
-```
-
+  {{content}}
 ]
-
----
-
-.pull-right[
-
-```{r lda-dmtr-pooled-variance, echo = TRUE}
-library(dmtr)
-pooled_variance(binaryclass2, class, x1:x2)
-```
-
-]
-
----
-layout: true
-
-# 교재용 R 패키지 작성의 필요성
-
-- 기존 R 패키지 수행 결과가 교재의 예제와 정확히 일치하지 않는 부분에 대한 혼동을 줄일 필요
-
-```{r lda-book-example, echo = FALSE, fig.cap="교재 예제", out.width='50%', fig.align='center'}
-knitr::include_graphics("images/lda-book-example-function.png")
-```
-
----
 
 --
 
-```{r lda-mass-result, echo = TRUE, out.width='50%', fig.cap="{MASS} 패키지 결과", fig.align='center'}
-fit <- MASS::lda(class ~ x1 + x2, data = binaryclass2)
-coef(fit) %>% drop()
-```
+- 온라인 버전 보조 교재로 활용
+{{content}}
 
 --
 
-```{r lda-mass-result-transform, echo = TRUE, out.width='50%', fig.cap="{MASS} 패키지 결과 변환", fig.align='center'}
-scaling_adjust <- 2.201359; sign_adjust <- -1;
-(coef(fit) * scaling_adjust * sign_adjust) %>% drop()
+- 예제를 R로 구현한 내용을 추가
+{{content}}
+
+--
+
+- 기존 R 패키지가 제공하지 않는 세부 결과 도출과정을 구현
+{{content}}
+
+--
+
+- 기존 R 패키지가 교재 설명과는 다른 알고리즘 사용한 경우에 대한 추가 설명
+{{content}}
+
+---
+class: middle
+
+```{r bookdown-folder, out.width="50%"}
+knitr::include_graphics("images/bookdown-folder.png")
 ```
 
 
----
-
-```{r lda-dmtr-result, echo = TRUE}
-dmtr::fisher_ld(binaryclass2, class, x1:x2)
-```
-
 
 ---
+class: inverse, center, middle
 layout: false
 
-# 교재용 R 패키지 작성의 필요성
+# 데이터 분석 문서화에서 패키지 개발로 전환
 
-- 분석 알고리즘을 교재와 일치하도록 함수로 구현
+## 동기
+
+
+---
+class: middle, center
+
+# 사용자 함수의 난립
+
+---
+class: middle
+
+.left-column[
+
+```{r rmd-single-image, out.width="80%"}
+knitr::include_graphics("images/rmd_image.png")
+```
+
+]
+
+.pull-right[
+
+{{content}}
+
+]
+
+--
+
+데이터 생성
+{{content}}
+
+--
+
+**함수 1**
+{{content}}
+
+--
+
+**함수 2**
+{{content}}
+
+--
+
+분석
+{{content}}
+
+--
+
+**함수 3**
+{{content}}
+
+--
+
+분석
+{{content}}
+
+--
+
+데이터 생성
+{{content}}
+
+--
+
+**함수 4**
+{{content}}
+
+--
+
+**함수 5**
+{{content}}
+
+--
+
+데이터 분석
+{{content}}
+
+--
+
+**...**
+{{content}}
+
+
+---
+class: middle
+
+.pull-left[
+
+```{r multiple-rmd-image, out.width="80%"}
+knitr::include_graphics("images/bookdown-folder.png")
+```
+
+]
+
+--
+
+.pull-right[
+
+```{r disorganized-spoons, out.width="90%"}
+knitr::include_graphics("images/rick-mason-2FaCKyEEtis-unsplash.jpg")
+```
+
+]
+
+
+---
+class: middle, center
+
+# 지금은 맞고, 나중엔 틀릴수도?
+
+---
+class: middle
+
+.pull-left[
+
+```{r namespace-1, echo=TRUE, error=TRUE}
+library(dplyr)
+
+data(binaryclass2, package = "dmtr")
+
+binaryclass2 %>% 
+  select(x1, x2) #<<
+```
+
+]
+
+--
+
+.pull-right[
+```{r}
+detach(package:dplyr)
+```
+
+```{r namespace-2, echo=TRUE, error=TRUE}
+library(dplyr)
+
+data(binaryclass2, package = "dmtr")
+
+library(MASS)
+fit <- lda(class ~ x1 + x2, binaryclass2)
+
+binaryclass2 %>% 
+  select(x1, x2) #<<
+```
+
+```{r}
+detach(package:MASS)
+```
+
+]
+
+---
+class: middle
+
+.pull-left[
+
+**`{tidyr}` 0.x**
 
 ```r
-fisher_ld <- function(.data, .group_var, .xvar) {
-  .group_var <- rlang::enquo(.group_var)
-  .xvar <- rlang::enquo(.xvar)
-
-* mu_hat <- group_mean(.data, !!.group_var, !!.xvar)
-
-  if (length(mu_hat) != 2L) {
-    stop("number of levels of .group_var must be 2.")
-  }
-
-* sigma_hat <- pooled_variance(.data, !!.group_var, !!.xvar)
-
-* res <- solve(sigma_hat) %*% purrr::reduce(mu_hat, `-`) %>% drop()
-
-  attr(res, "group") <- attr(mu_hat, "group")
-
-  return(res)
-}
+df <- tibble(
+ a = list(c("a", "b"), "c"),
+ b = list(1:2, 3),
+ c = c(11, 22)
+)
+* df %>% tidyr::unnest(a, b)
 ```
 
-```{r, include=FALSE}
-detach("package:MASS", character.only = TRUE)
+```{r unnest-old}
+df <- tibble(
+ a = list(c("a", "b"), "c"),
+ b = list(1:2, 3),
+ c = c(11, 22)
+)
+df %>% tidyr::unnest_legacy(a, b)
 ```
+
+]
+
+--
+
+.pull-right[
+
+**`{tidyr}` 1.0.0**
+
+```{r unnest-new, echo=TRUE}
+df <- tibble(
+ a = list(c("a", "b"), "c"),
+ b = list(1:2, 3),
+ c = c(11, 22)
+)
+df %>% tidyr::unnest(c(a, b)) #<<
+```
+
+
+]
+
+---
+class: middle
+
+- 오류 발생 시 수정에 많은 시간 소요 
+
+- 코드 실행 오류는 없으나 결과가 틀린 경우는 오류 발견 자체가 어려움
 
 
 
@@ -678,49 +740,12 @@ layout: true
 
   + 패키지 로드 순서에 따라 결과가 달라지거나 오류 발생하는 문제 
 
---
-
-.pull-left[
-```{r}
-# detach(package:MASS)
-detach(package:dplyr)
-```
-
-```{r namespace-1, echo=TRUE, error=TRUE}
-library(MASS)
-library(dplyr)
-tibble(x = 1:2, y = 2:3) %>% 
-  select(x)
-```
-]
-
---
-
-.pull-right[
-```{r}
-detach(package:MASS)
-detach(package:dplyr)
-```
-
-```{r namespace-2, echo=TRUE, error=TRUE}
-library(dplyr)
-library(MASS)
-tibble(x = 1:2, y = 2:3) %>% 
-  select(x)
-```
-]
-
 ---
 - 네임스페이스 명시화 / `package::function()`
 
   + 어떤 패키지의 함수를 사용할 것인지 명시화
 
 --
-
-```{r}
-detach(package:MASS)
-```
-
 
 ```{r namespace-3, echo=TRUE, error=TRUE}
 dplyr::tibble(x = 1:2, y = 2:3) %>% 
