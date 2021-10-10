@@ -857,11 +857,11 @@ class: center, middle
 
 ```r
 library(dmtr)
-library(corrr)
+*library(corrr)
 library(dplyr)
 binaryclass2 %&gt;% 
   select(x1, x2) %&gt;% 
-  correlate()
+* correlate()
 ```
 
 &lt;PRE class="fansi fansi-output"&gt;&lt;CODE&gt;&lt;span style='color: #555555;'&gt;# A tibble: 2 × 3&lt;/span&gt;
@@ -879,7 +879,7 @@ library(dmtr)
 library(dplyr)
 binaryclass2 %&gt;% 
   select(x1, x2) %&gt;% 
-  corrr::correlate()
+* corrr::correlate()
 ```
 
 &lt;PRE class="fansi fansi-output"&gt;&lt;CODE&gt;&lt;span style='color: #555555;'&gt;# A tibble: 2 × 3&lt;/span&gt;
@@ -899,28 +899,8 @@ binaryclass2 %&gt;%
 - 메타 프로그래밍
 
   + 하드코딩 지양
-  
-  + **tidy eval** 프레임워크 활용
 
-```r
-fisher_ld &lt;- function(.data, .group_var, .xvar) {
-* .group_var &lt;- rlang::enquo(.group_var)
-* .xvar &lt;- rlang::enquo(.xvar)
-* mu_hat &lt;- group_mean(.data, !!.group_var, !!.xvar)
-
-  if (length(mu_hat) != 2L) {
-    stop("number of levels of .group_var must be 2.")
-  }
-
-* sigma_hat &lt;- pooled_variance(.data, !!.group_var, !!.xvar)
-
-  res &lt;- solve(sigma_hat) %*% purrr::reduce(mu_hat, `-`) %&gt;% drop()
-  attr(res, "group") &lt;- attr(mu_hat, "group")
-  return(res)
-}
-
-* fisher_ld(binaryclass2, class, c(x1, x2))
-```
+&lt;img src="images/rlang-logo.png" width="30%" style="display: block; margin: auto;" /&gt;
 
 
 ---

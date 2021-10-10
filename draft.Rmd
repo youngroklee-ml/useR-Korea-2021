@@ -960,11 +960,11 @@ knitr::include_graphics("images/test-results.png")
 .pull-left[
 ```{r, echo=TRUE, message=FALSE}
 library(dmtr)
-library(corrr)
+library(corrr) #<<
 library(dplyr)
 binaryclass2 %>% 
   select(x1, x2) %>% 
-  correlate()
+  correlate() #<<
 ```
 ]
 
@@ -974,7 +974,7 @@ library(dmtr)
 library(dplyr)
 binaryclass2 %>% 
   select(x1, x2) %>% 
-  corrr::correlate()
+  corrr::correlate() #<<
 ```
 
 ]  
@@ -987,27 +987,11 @@ binaryclass2 %>%
 - 메타 프로그래밍
 
   + 하드코딩 지양
-  
-  + **tidy eval** 프레임워크 활용
 
-```r
-fisher_ld <- function(.data, .group_var, .xvar) {
-* .group_var <- rlang::enquo(.group_var)
-* .xvar <- rlang::enquo(.xvar)
-* mu_hat <- group_mean(.data, !!.group_var, !!.xvar)
-
-  if (length(mu_hat) != 2L) {
-    stop("number of levels of .group_var must be 2.")
-  }
-
-* sigma_hat <- pooled_variance(.data, !!.group_var, !!.xvar)
-
-  res <- solve(sigma_hat) %*% purrr::reduce(mu_hat, `-`) %>% drop()
-  attr(res, "group") <- attr(mu_hat, "group")
-  return(res)
-}
-
-* fisher_ld(binaryclass2, class, c(x1, x2))
+```{r rlang-logo, out.width='30%'}
+knitr::include_graphics(
+  "images/rlang-logo.png"
+)
 ```
 
 
