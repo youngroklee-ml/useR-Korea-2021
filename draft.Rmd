@@ -73,38 +73,29 @@ class: inverse, left, middle
 
 ----
 
-1. 데이터 분석 문서화에서 패키지 개발로 전환
+  - 패키지 개발 배경
+  
+  - 주요 작업 과정
 
-  - 배경
-  
-  - 동기
-  
-  - 작업 과정
-  
-2. 데이터 분석가에게 유용한 개발자 관점
+  - 데이터 분석가가 배우면 유용한 개발자 관점
 
-  - 프로젝트 관리
-  
-  - 변화 관리
-  
-  - 코드의 재사용성 향상
+  - 맺음말
 
-3. 맺음말
-  
 
 ---
 class: inverse, center, middle
 
-# 데이터 분석 문서화에서 패키지 개발로 전환
+# 패키지 개발 배경
 
 ---
-class: inverse, center, middle
+class: center, middle
 
-# 배경
+# 데이터마이닝 교재 참고자료 제작
 
 ---
-class: middle
 layout: true
+
+# 데이터마이닝 교재 참고자료 제작
 
 .pull-left[
 
@@ -156,15 +147,10 @@ binaryclass2 %>%
 
 .pull-right[
 
-- 데이터 마이닝 알고리즘을 잘 이해할 수 있게 깔끔하게 구성된 교재
+- 데이터 마이닝 이론과 알고리즘을 잘 이해할 수 있게 깔끔하게 구성된 교재
 {{content}}
 
 ]
-
---
-
-- 단순히 기존 패키지를 사용하는 것보다 깊이 있는 내용을 제공
-{{content}}
 
 --
 
@@ -179,8 +165,9 @@ binaryclass2 %>%
 
 
 ---
-class: middle
 layout: false
+
+# 데이터마이닝 교재 참고자료 제작
 
 
 .pull-left[
@@ -201,7 +188,7 @@ knitr::include_graphics(c("images/bookdown-logo.png"))
 
 
 ---
-class: middle
+# 데이터마이닝 교재 참고자료 제작
 
 .pull-left[
 
@@ -235,28 +222,18 @@ knitr::include_graphics("images/onlinebook-main.jpg")
 
 --
 
-- 기존 R 패키지가 제공하지 않는 세부 결과 도출과정을 구현
+- 단순히 기존 R 패키지를 사용하는 것보다 깊이 있는 내용을 제공
 {{content}}
 
---
-
-- 기존 R 패키지가 교재 설명과는 다른 알고리즘 사용한 경우에 대한 추가 설명
-{{content}}
 
 ---
-class: middle
+
+# 데이터마이닝 교재 참고자료 제작
+
 
 ```{r bookdown-folder, out.width="50%"}
 knitr::include_graphics("images/bookdown-folder.png")
 ```
-
-
-
----
-class: inverse, center, middle
-layout: false
-
-# 동기
 
 
 ---
@@ -353,8 +330,8 @@ knitr::include_graphics("images/bookdown-folder.png")
 
 .pull-right[
 
-```{r disorganized-spoons, out.width="90%"}
-knitr::include_graphics("images/rick-mason-2FaCKyEEtis-unsplash.jpg")
+```{r messy-photo, out.width="90%"}
+knitr::include_graphics("images/xavi-cabrera-kn-UmDZQDjM-unsplash.jpg")
 ```
 
 ]
@@ -363,10 +340,10 @@ knitr::include_graphics("images/rick-mason-2FaCKyEEtis-unsplash.jpg")
 ---
 class: middle, center
 
-# 지금은 맞고, 나중엔 틀릴수도?
+# 지금은 맞지만, 나중엔 틀릴수도?
 
 ---
-class: middle
+# 지금은 맞지만, 나중엔 틀릴수도?
 
 .pull-left[
 
@@ -407,7 +384,7 @@ detach(package:MASS)
 ]
 
 ---
-class: middle
+# 지금은 맞지만, 나중엔 틀릴수도?
 
 .pull-left[
 
@@ -452,7 +429,8 @@ df %>% tidyr::unnest(c(a, b)) #<<
 ]
 
 ---
-class: middle
+
+# 지금은 맞지만, 나중엔 틀릴수도?
 
 - 오류 발생 시 수정에 많은 시간 소요 
 
@@ -466,7 +444,7 @@ class: middle
 class: inverse, center, middle
 layout: false
 
-# 작업 과정
+# 주요 작업 과정
 
 ---
 class: center, middle
@@ -848,11 +826,84 @@ knitr::include_graphics("images/pkgdown-site.gif")
 ---
 class: inverse, center, middle
 
-# 데이터 분석가에게 유용한 개발자 관점
+# 데이터 분석가가 배우면 유용한 개발자 관점
+
+---
+class: center, middle
+
+# 체계적인 프로젝트 폴더 구조
 
 ---
 
-# 프로젝트 관리
+# 체계적인 프로젝트 폴더 구조
+
+- 프로젝트 폴더
+
+```{r package-folder-structure, out.width='70%'}
+knitr::include_graphics("images/package-folder-structure.png")
+```
+
+
+---
+
+# 체계적인 프로젝트 폴더 구조
+
+- **data-raw/**: 데이터 생성/쿼리 R 스크립트 (.R)
+
+```{r data-raw-folder-files, out.width='70%'}
+knitr::include_graphics("images/data-raw-folder-files.png")
+```
+
+
+---
+
+# 체계적인 프로젝트 폴더 구조
+
+- **data/**: 생성된 데이터 파일 (.rda)
+
+```{r data-folder-files, out.width='50%'}
+knitr::include_graphics("images/data-folder-files.png")
+```
+
+
+---
+
+# 체계적인 프로젝트 폴더 구조
+
+- **R/**: 재사용을 위해 모듈화된 데이터 분석 함수 (.R)
+
+```{r r-folder-files, out.width='70%'}
+knitr::include_graphics("images/r-folder-files.png")
+```
+
+---
+
+# 체계적인 프로젝트 폴더 구조
+
+- **vignettes/**: 데이터 분석 문서 소스 (.Rmd)
+
+```{r vignettes-folder-files, out.width='70%'}
+knitr::include_graphics("images/vignettes-folder-files.png")
+```
+
+
+---
+
+# 체계적인 프로젝트 폴더 구조
+
+- **tests/**: 코드 테스트 (.R)
+
+```{r tests-folder-files, out.width='70%'}
+knitr::include_graphics("images/testthat-folder-files.png")
+```
+
+
+
+---
+
+# 체계적인 프로젝트 폴더 구조
+
+.pull-left[
 
 - 일관된 프로젝트 폴더 구조
 
@@ -864,64 +915,47 @@ class: inverse, center, middle
   
   + **vignettes/**: 데이터 분석 문서 소스 (.Rmd)
 
-  + **doc/**: 배포용 데이터 분석 문서 (.html)
-  
-  + **tests/**: 단위 테스트 (.R)
+  + **tests/**: 코드 테스트 (.R)
 
-
-
----
-
-# 코드 테스트
-
-.pull-left[
-- 리팩토링(refactoring) 생산성 증가
-
-- R 버전 및 패키지 업데이트에 따른 이상 유무 확인
-
-- One is better than nothing
 ]
 
 .pull-right[
 
-```{r refactoring-book, echo = FALSE, fig.cap="Refactoring: improving the design of existing code / Addison-Wesley Professional / Martin Fowler", out.width='40%', fig.align='center'}
-knitr::include_graphics("images/refact2.jpeg")
+```{r tidy-photo, out.width="90%"}
+knitr::include_graphics("images/mourizal-zativa-gNMVpAPe3PE-unsplash.jpg")
 ```
 
 ]
 
 
+---
+class: center, middle
 
+# 리팩토링
 
 ---
-layout: true
 
-# 코드 모호성 제거
+# 리팩토링
 
----
-- 네임스페이스 명시화 / `package::function()`
-
-  + 패키지 로드 순서에 따라 결과가 달라지거나 오류 발생하는 문제 
-
----
-- 네임스페이스 명시화 / `package::function()`
-
-  + 어떤 패키지의 함수를 사용할 것인지 명시화
-
---
-
-```{r namespace-3, echo=TRUE, error=TRUE}
-dplyr::tibble(x = 1:2, y = 2:3) %>% 
-  dplyr::select(x)
+```{r refactoring-book, echo = FALSE, fig.cap="Refactoring: improving the design of existing code / Addison-Wesley Professional / Martin Fowler", out.width='30%', fig.align='center'}
+knitr::include_graphics("images/refact2.jpeg")
 ```
 
+---
+
+# 리팩토링
+
+- 코드 테스트
+
+```{r test-results, out.width='50%'}
+knitr::include_graphics("images/test-results.png")
+```
 
 ---
-- 네임스페이스 명시화 / `package::function()`
 
-  + 코드를 이해하기 쉽도록 도움
+# 리팩토링
 
---
+- 네임 스페이스 명시화
 
 .pull-left[
 ```{r, echo=TRUE, message=FALSE}
@@ -934,8 +968,6 @@ binaryclass2 %>%
 ```
 ]
 
---
-
 .pull-right[
 ```{r, echo=TRUE, message=FALSE}
 library(dmtr)
@@ -947,10 +979,10 @@ binaryclass2 %>%
 
 ]  
 
----
-layout: false
 
-# 코드의 재사용성 향상
+---
+
+# 리팩토링
 
 - 메타 프로그래밍
 

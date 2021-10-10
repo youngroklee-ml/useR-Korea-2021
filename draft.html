@@ -35,38 +35,29 @@ class: inverse, left, middle
 
 ----
 
-1. 데이터 분석 문서화에서 패키지 개발로 전환
+  - 패키지 개발 배경
+  
+  - 주요 작업 과정
 
-  - 배경
-  
-  - 동기
-  
-  - 작업 과정
-  
-2. 데이터 분석가에게 유용한 개발자 관점
+  - 데이터 분석가가 배우면 유용한 개발자 관점
 
-  - 프로젝트 관리
-  
-  - 변화 관리
-  
-  - 코드의 재사용성 향상
+  - 맺음말
 
-3. 맺음말
-  
 
 ---
 class: inverse, center, middle
 
-# 데이터 분석 문서화에서 패키지 개발로 전환
+# 패키지 개발 배경
 
 ---
-class: inverse, center, middle
+class: center, middle
 
-# 배경
+# 데이터마이닝 교재 참고자료 제작
 
 ---
-class: middle
 layout: true
+
+# 데이터마이닝 교재 참고자료 제작
 
 .pull-left[
 
@@ -94,15 +85,10 @@ layout: true
 
 .pull-right[
 
-- 데이터 마이닝 알고리즘을 잘 이해할 수 있게 깔끔하게 구성된 교재
+- 데이터 마이닝 이론과 알고리즘을 잘 이해할 수 있게 깔끔하게 구성된 교재
 {{content}}
 
 ]
-
---
-
-- 단순히 기존 패키지를 사용하는 것보다 깊이 있는 내용을 제공
-{{content}}
 
 --
 
@@ -117,8 +103,9 @@ layout: true
 
 
 ---
-class: middle
 layout: false
+
+# 데이터마이닝 교재 참고자료 제작
 
 
 .pull-left[
@@ -135,7 +122,7 @@ layout: false
 
 
 ---
-class: middle
+# 데이터마이닝 교재 참고자료 제작
 
 .pull-left[
 
@@ -164,26 +151,16 @@ class: middle
 
 --
 
-- 기존 R 패키지가 제공하지 않는 세부 결과 도출과정을 구현
+- 단순히 기존 R 패키지를 사용하는 것보다 깊이 있는 내용을 제공
 {{content}}
 
---
-
-- 기존 R 패키지가 교재 설명과는 다른 알고리즘 사용한 경우에 대한 추가 설명
-{{content}}
 
 ---
-class: middle
+
+# 데이터마이닝 교재 참고자료 제작
+
 
 &lt;img src="images/bookdown-folder.png" width="50%" style="display: block; margin: auto;" /&gt;
-
-
-
----
-class: inverse, center, middle
-layout: false
-
-# 동기
 
 
 ---
@@ -276,7 +253,7 @@ class: middle, center
 
 .pull-right[
 
-&lt;img src="images/rick-mason-2FaCKyEEtis-unsplash.jpg" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/xavi-cabrera-kn-UmDZQDjM-unsplash.jpg" width="90%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -284,10 +261,10 @@ class: middle, center
 ---
 class: middle, center
 
-# 지금은 맞고, 나중엔 틀릴수도?
+# 지금은 맞지만, 나중엔 틀릴수도?
 
 ---
-class: middle
+# 지금은 맞지만, 나중엔 틀릴수도?
 
 .pull-left[
 
@@ -344,7 +321,7 @@ Error in select(., x1, x2): unused arguments (x1, x2)
 ]
 
 ---
-class: middle
+# 지금은 맞지만, 나중엔 틀릴수도?
 
 .pull-left[
 
@@ -397,7 +374,8 @@ df &lt;- tibble(
 ]
 
 ---
-class: middle
+
+# 지금은 맞지만, 나중엔 틀릴수도?
 
 - 오류 발생 시 수정에 많은 시간 소요 
 
@@ -411,7 +389,7 @@ class: middle
 class: inverse, center, middle
 layout: false
 
-# 작업 과정
+# 주요 작업 과정
 
 ---
 class: center, middle
@@ -759,11 +737,72 @@ layout: false
 ---
 class: inverse, center, middle
 
-# 데이터 분석가에게 유용한 개발자 관점
+# 데이터 분석가가 배우면 유용한 개발자 관점
+
+---
+class: center, middle
+
+# 체계적인 프로젝트 폴더 구조
 
 ---
 
-# 프로젝트 관리
+# 체계적인 프로젝트 폴더 구조
+
+- 프로젝트 폴더
+
+&lt;img src="images/package-folder-structure.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# 체계적인 프로젝트 폴더 구조
+
+- **data-raw/**: 데이터 생성/쿼리 R 스크립트 (.R)
+
+&lt;img src="images/data-raw-folder-files.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# 체계적인 프로젝트 폴더 구조
+
+- **data/**: 생성된 데이터 파일 (.rda)
+
+&lt;img src="images/data-folder-files.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# 체계적인 프로젝트 폴더 구조
+
+- **R/**: 재사용을 위해 모듈화된 데이터 분석 함수 (.R)
+
+&lt;img src="images/r-folder-files.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# 체계적인 프로젝트 폴더 구조
+
+- **vignettes/**: 데이터 분석 문서 소스 (.Rmd)
+
+&lt;img src="images/vignettes-folder-files.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# 체계적인 프로젝트 폴더 구조
+
+- **tests/**: 코드 테스트 (.R)
+
+&lt;img src="images/testthat-folder-files.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+
+# 체계적인 프로젝트 폴더 구조
+
+.pull-left[
 
 - 일관된 프로젝트 폴더 구조
 
@@ -775,73 +814,44 @@ class: inverse, center, middle
   
   + **vignettes/**: 데이터 분석 문서 소스 (.Rmd)
 
-  + **doc/**: 배포용 데이터 분석 문서 (.html)
-  
-  + **tests/**: 단위 테스트 (.R)
+  + **tests/**: 코드 테스트 (.R)
 
-
-
----
-
-# 코드 테스트
-
-.pull-left[
-- 리팩토링(refactoring) 생산성 증가
-
-- R 버전 및 패키지 업데이트에 따른 이상 유무 확인
-
-- One is better than nothing
 ]
 
 .pull-right[
 
-&lt;div class="figure" style="text-align: center"&gt;
-&lt;img src="images/refact2.jpeg" alt="Refactoring: improving the design of existing code / Addison-Wesley Professional / Martin Fowler" width="40%" /&gt;
-&lt;p class="caption"&gt;Refactoring: improving the design of existing code / Addison-Wesley Professional / Martin Fowler&lt;/p&gt;
-&lt;/div&gt;
+&lt;img src="images/mourizal-zativa-gNMVpAPe3PE-unsplash.jpg" width="90%" style="display: block; margin: auto;" /&gt;
 
 ]
 
 
+---
+class: center, middle
 
+# 리팩토링
 
 ---
-layout: true
 
-# 코드 모호성 제거
+# 리팩토링
 
----
-- 네임스페이스 명시화 / `package::function()`
-
-  + 패키지 로드 순서에 따라 결과가 달라지거나 오류 발생하는 문제 
-
----
-- 네임스페이스 명시화 / `package::function()`
-
-  + 어떤 패키지의 함수를 사용할 것인지 명시화
-
---
-
-
-```r
-dplyr::tibble(x = 1:2, y = 2:3) %&gt;% 
-  dplyr::select(x)
-```
-
-&lt;PRE class="fansi fansi-output"&gt;&lt;CODE&gt;&lt;span style='color: #555555;'&gt;# A tibble: 2 × 1&lt;/span&gt;
-      x
-  &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;int&amp;gt;&lt;/span&gt;
-&lt;span style='color: #555555;'&gt;1&lt;/span&gt;     1
-&lt;span style='color: #555555;'&gt;2&lt;/span&gt;     2
-&lt;/CODE&gt;&lt;/PRE&gt;
-
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/refact2.jpeg" alt="Refactoring: improving the design of existing code / Addison-Wesley Professional / Martin Fowler" width="30%" /&gt;
+&lt;p class="caption"&gt;Refactoring: improving the design of existing code / Addison-Wesley Professional / Martin Fowler&lt;/p&gt;
+&lt;/div&gt;
 
 ---
-- 네임스페이스 명시화 / `package::function()`
 
-  + 코드를 이해하기 쉽도록 도움
+# 리팩토링
 
---
+- 코드 테스트
+
+&lt;img src="images/test-results.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# 리팩토링
+
+- 네임 스페이스 명시화
 
 .pull-left[
 
@@ -862,8 +872,6 @@ binaryclass2 %&gt;%
 &lt;/CODE&gt;&lt;/PRE&gt;
 ]
 
---
-
 .pull-right[
 
 ```r
@@ -883,10 +891,10 @@ binaryclass2 %&gt;%
 
 ]  
 
----
-layout: false
 
-# 코드의 재사용성 향상
+---
+
+# 리팩토링
 
 - 메타 프로그래밍
 
