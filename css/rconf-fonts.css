@@ -2,13 +2,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo');
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding');
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR');
+/* @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon'); */
+@import url('https://fonts.googleapis.com/css2?family=Hahmlet');
 
 body {
-  font-family: 'Nanum Gothic', serif;
+  font-family: 'IBM Plex Sans KR', 'Hahmlet', 'Nanum Gothic', serif;
 }
 
 h1, h2, h3 {
-  font-family: 'Nanum Gothic', sans-serif;
+  font-family: 'IBM Plex Sans KR', 'Hahmlet', 'Nanum Gothic', sans-serif;
 }
 
 .remark-code, .remark-inline-code {

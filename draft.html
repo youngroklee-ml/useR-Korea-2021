@@ -59,7 +59,10 @@ class: inverse, center, middle
 
 # 데이터 분석 문서화에서 패키지 개발로 전환
 
-## 배경
+---
+class: inverse, center, middle
+
+# 배경
 
 ---
 class: middle
@@ -180,9 +183,7 @@ class: middle
 class: inverse, center, middle
 layout: false
 
-# 데이터 분석 문서화에서 패키지 개발로 전환
-
-## 동기
+# 동기
 
 
 ---
@@ -191,9 +192,9 @@ class: middle, center
 # 사용자 함수의 난립
 
 ---
-class: middle
+# 사용자 함수의 난립
 
-.left-column[
+.pull-left[
 
 &lt;img src="images/rmd_image.png" width="80%" style="display: block; margin: auto;" /&gt;
 
@@ -262,7 +263,8 @@ class: middle
 
 
 ---
-class: middle
+
+# 사용자 함수의 난립
 
 .pull-left[
 
@@ -409,147 +411,230 @@ class: middle
 class: inverse, center, middle
 layout: false
 
-# 데이터 분석 문서화에서 패키지 개발로 전환
-
-## 작업 과정
-
+# 작업 과정
 
 ---
-
-# 현실적인 작업범위 및 기대수준 정의
-
-- 참고교재
-
-- 실무용 아님
-
-- 제한된 유연성
-
----
-
-# 편리한 작업환경 선택
+class: center, middle
 
 .pull-left[
 
-- RStudio IDE
-
-- `{devtools}`, `{usethis}`, `{testthat}`, etc.
-
-- Git and GitHub
-
-]
-
-.pull-right[
-
 &lt;div class="figure" style="text-align: center"&gt;
-&lt;img src="images/r-pkgs-cover.png" alt="R Packages / O'Reilly / Hadley Wickham" width="40%" /&gt;
+&lt;img src="images/r-pkgs-cover.png" alt="R Packages / O'Reilly / Hadley Wickham" width="80%" /&gt;
 &lt;p class="caption"&gt;R Packages / O'Reilly / Hadley Wickham&lt;/p&gt;
 &lt;/div&gt;
 
 ]
 
+.pull-right[
+
+&lt;img src="images/devtools-logo.svg" width="80%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+class: center, middle
+
+# R Markdown 문서 해체 및 재구성
+
+---
+
+# R Markdown 문서 해체 및 재구성
+
+.pull-left[
+
+````
+```{r}
+binaryclass2 &lt;- tribble(
+  ~id, ~x1, ~x2, ~class,
+  1, 5, 7, 1,
+  2, 4, 3, 2,
+  3, 7, 8, 2,
+  4, 8, 6, 2,
+  5, 3, 6, 1,
+  6, 2, 5, 1,
+  7, 6, 6, 1,
+  8, 9, 6, 2,
+  9, 5, 4, 2
+)
+
+group_mean &lt;- function(...) {...}
+pooled_variance &lt;- function(...) {...}
+fisher_ld &lt;- function(...) {...}
+
+w_hat &lt;- fisher_ld(
+  binaryclass2, class, x1:x2)
+print(w_hat)
+```
+````
+
+]
+
+---
+
+# R Markdown 문서 해체 및 재구성
+
+.pull-left[
+
+````
+```{r}
+*binaryclass2 &lt;- tribble(
+*  ~id, ~x1, ~x2, ~class,
+*  1, 5, 7, 1,
+*  2, 4, 3, 2,
+*  3, 7, 8, 2,
+*  4, 8, 6, 2,
+*  5, 3, 6, 1,
+*  6, 2, 5, 1,
+*  7, 6, 6, 1,
+*  8, 9, 6, 2,
+*  9, 5, 4, 2
+*)
+
+group_mean &lt;- function(...) {...}
+pooled_variance &lt;- function(...) {...}
+fisher_ld &lt;- function(...) {...}
+
+w_hat &lt;- fisher_ld(
+  binaryclass2, class, x1:x2)
+print(w_hat)
+```
+````
+
+]
+
+
+.pull-right[
+
+&lt;img src="images/data-raw-folder-icon.png" width="30%" style="display: block; margin: auto;" /&gt;&lt;img src="images/data-raw-binaryclass.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+
+---
+
+# R Markdown 문서 해체 및 재구성
+
+.pull-left[
+
+````
+```{r}
+binaryclass2 &lt;- tribble(
+  ~id, ~x1, ~x2, ~class,
+  1, 5, 7, 1,
+  2, 4, 3, 2,
+  3, 7, 8, 2,
+  4, 8, 6, 2,
+  5, 3, 6, 1,
+  6, 2, 5, 1,
+  7, 6, 6, 1,
+  8, 9, 6, 2,
+  9, 5, 4, 2
+)
+
+*group_mean &lt;- function(...) {...}
+*pooled_variance &lt;- function(...) {...}
+*fisher_ld &lt;- function(...) {...}
+
+w_hat &lt;- fisher_ld(
+  binaryclass2, class, x1:x2)
+print(w_hat)
+```
+````
+
+]
+
+
+.pull-right[
+
+&lt;img src="images/r-folder-icon.png" width="30%" style="display: block; margin: auto;" /&gt;&lt;img src="images/r-within-group.png" width="30%" style="display: block; margin: auto;" /&gt;&lt;img src="images/r-discriminant-functions.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+
+# R Markdown 문서 해체 및 재구성
+
+.pull-left[
+
+````
+```{r}
+binaryclass2 &lt;- tribble(
+  ~id, ~x1, ~x2, ~class,
+  1, 5, 7, 1,
+  2, 4, 3, 2,
+  3, 7, 8, 2,
+  4, 8, 6, 2,
+  5, 3, 6, 1,
+  6, 2, 5, 1,
+  7, 6, 6, 1,
+  8, 9, 6, 2,
+  9, 5, 4, 2
+)
+
+group_mean &lt;- function(...) {...}
+pooled_variance &lt;- function(...) {...}
+fisher_ld &lt;- function(...) {...}
+
+*w_hat &lt;- fisher_ld(
+*  binaryclass2, class, x1:x2)
+*print(w_hat)
+```
+````
+
+]
+
+
+.pull-right[
+
+&lt;img src="images/vignettes-folder-icon.png" width="30%" style="display: block; margin: auto;" /&gt;&lt;img src="images/vignettes-discriminant-analysis.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+# R Markdown 문서 해체 및 재구성
+
+.pull-left[
+
+````
+```{r}
+library(dmtr)
+
+w_hat &lt;- fisher_ld(
+  binaryclass2, class, x1:x2)
+print(w_hat)
+```
+````
+
+]
+
+
+.pull-right[
+
+&lt;img src="images/vignettes-folder-icon.png" width="30%" style="display: block; margin: auto;" /&gt;&lt;img src="images/vignettes-discriminant-analysis.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+
+---
+class: middle, center
+
+# 함수 도움말 문서 작성
+
+---
+
+# 함수 도움말 문서 작성
+
+&lt;img src="images/roxygen2-logo.png" width="30%" style="display: block; margin: auto;" /&gt;
 
 ---
 layout: true
 
-# R 스크립트 분류 및 재구성
-
----
-
-- R 스크립트를 목적별로 분류하여 각 목적에 맞는 폴더에 저장
-  + 데이터 생성: data-raw/ 폴더에 .R 파일로 저장
-  + 함수 정의: R/ 폴더에 .R 파일로 저장
-  + 데이터 분석: vignettes/ 폴더에 .Rmd 파일로 저장
-
-```r
-binaryclass2 &lt;- tibble::tibble(
-  id = c(1:9),
-  x1 = c(5, 4, 7, 8, 3, 2, 6, 9, 5),
-  x2 = c(7, 3, 8, 6, 6, 5, 6, 6, 4),
-  class = factor(c(1, 2, 2, 2, 1, 1, 1, 2, 2), levels = c(1, 2))
-)
-
-group_mean &lt;- function(.data, .group_var, .xvar) {...}
-pooled_variance &lt;- function(.data, .group_var, .xvar) {...}
-fisher_ld &lt;- function(.data, .group_var, .xvar) {...}
-
-w_hat &lt;- fisher_ld(binaryclass2, class, c(x1, x2))
-print(w_hat)
-```
-
----
-
-- R 스크립트를 목적별로 분류하여 각 목적에 맞는 폴더에 저장
-  + **데이터 생성: data-raw/ 폴더에 .R 파일로 저장**
-  + 함수 정의: R/ 폴더에 .R 파일로 저장
-  + 데이터 분석: vignettes/ 폴더에 .Rmd 파일로 저장
-
-```r
-*binaryclass2 &lt;- tibble::tibble(
-* id = c(1:9),
-* x1 = c(5, 4, 7, 8, 3, 2, 6, 9, 5),
-* x2 = c(7, 3, 8, 6, 6, 5, 6, 6, 4),
-* class = factor(c(1, 2, 2, 2, 1, 1, 1, 2, 2), levels = c(1, 2))
-*)
-
-group_mean &lt;- function(.data, .group_var, .xvar) {...}
-pooled_variance &lt;- function(.data, .group_var, .xvar) {...}
-fisher_ld &lt;- function(.data, .group_var, .xvar) {...}
-
-w_hat &lt;- fisher_ld(binaryclass2, class, c(x1, x2))
-print(w_hat)
-```
-
----
-
-- R 스크립트를 목적별로 분류하여 각 목적에 맞는 폴더에 저장
-  + 데이터 생성: data-raw/ 폴더에 .R 파일로 저장
-  + **함수 정의: R/ 폴더에 .R 파일로 저장**
-  + 데이터 분석: vignettes/ 폴더에 .Rmd 파일로 저장
-
-
-```r
-binaryclass2 &lt;- tibble::tibble(
-  id = c(1:9),
-  x1 = c(5, 4, 7, 8, 3, 2, 6, 9, 5),
-  x2 = c(7, 3, 8, 6, 6, 5, 6, 6, 4),
-  class = factor(c(1, 2, 2, 2, 1, 1, 1, 2, 2), levels = c(1, 2))
-)
-
-*group_mean &lt;- function(.data, .group_var, .xvar) {...}
-*pooled_variance &lt;- function(.data, .group_var, .xvar) {...}
-*fisher_ld &lt;- function(.data, .group_var, .xvar) {...}
-
-w_hat &lt;- fisher_ld(binaryclass2, class, c(x1, x2))
-print(w_hat)
-```
-
----
-
-- R 스크립트를 목적별로 분류하여 각 목적에 맞는 폴더에 저장
-  + 데이터 생성: data-raw/ 폴더에 .R 파일로 저장
-  + 함수 정의: R/ 폴더에 .R 파일로 저장
-  + **데이터 분석: vignettes/ 폴더에 .Rmd 파일로 저장**
-
-```r
-binaryclass2 &lt;- tibble::tibble(
-  id = c(1:9),
-  x1 = c(5, 4, 7, 8, 3, 2, 6, 9, 5),
-  x2 = c(7, 3, 8, 6, 6, 5, 6, 6, 4),
-  class = factor(c(1, 2, 2, 2, 1, 1, 1, 2, 2), levels = c(1, 2))
-)
-
-group_mean &lt;- function(.data, .group_var, .xvar) {...}
-pooled_variance &lt;- function(.data, .group_var, .xvar) {...}
-fisher_ld &lt;- function(.data, .group_var, .xvar) {...}
-
-*w_hat &lt;- fisher_ld(binaryclass2, class, c(x1, x2))
-*print(w_hat)
-```
-
----
-layout: false
-
-# `{roxygen2}`를 이용한 함수 도움말 문서 작성
+# 함수 도움말 문서 작성
 
 .pull-left[
 
@@ -576,7 +661,17 @@ fisher_ld &lt;-
 
 ]
 
---
+---
+
+---
+
+.pull-right[
+
+&lt;img src="images/man-folder-icon.png" width="30%" style="display: block; margin: auto;" /&gt;&lt;img src="images/man-fisher_ld.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
 
 .pull-right[
 
@@ -587,20 +682,35 @@ fisher_ld &lt;-
 
 ]
 
+---
+class: middle, center
+layout: false
 
+# 코드 테스트
 
 ---
 
-# `{testthat}`을 이용한 단위 테스트 작성
+# 코드 테스트
 
-- 예제 결과 재현성 테스트
+&lt;img src="images/testthat-logo.png" width="30%" style="display: block; margin: auto;" /&gt;
 
-&lt;div class="figure" style="text-align: center"&gt;
-&lt;img src="images/lda-book-example-function.png" alt="교재 예제" width="50%" /&gt;
-&lt;p class="caption"&gt;교재 예제&lt;/p&gt;
-&lt;/div&gt;
 
---
+---
+layout: true
+
+# 코드 테스트
+
+예제 결과 재현성 테스트
+
+&lt;img src="images/lda-book-example-function.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+---
+
+&lt;img src="images/tests-folder-icon.png" width="10%" style="display: block; margin: auto;" /&gt;&lt;img src="images/tests-discriminant-functions.png" width="10%" style="display: block; margin: auto;" /&gt;
+
+---
 
 
 ```r
@@ -608,7 +718,7 @@ library(testthat); library(dmtr);
 test_that("Fisher discriminant function matches", {
   local_edition(3)
   expect_equal(
-*   fisher_ld(binaryclass2, class, c(x1, x2)),
+*   fisher_ld(binaryclass2, class, x1:x2),
 *   c(x1 = -1.5080, x2 = 1.5418),
     tolerance = 1e-3,
     ignore_attr = TRUE
@@ -621,14 +731,25 @@ test_that("Fisher discriminant function matches", {
 
 
 ---
+class: middle, center
+layout: false
 
-# 패키지 사이트 생성 
+# 패키지 웹사이트 생성
 
-- `{pkgdown}`을 이용한 패키지 웹사이트 생성
+---
+
+# 패키지 웹사이트 생성 
+
+&lt;img src="images/pkgdown-logo.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# 패키지 웹사이트 생성 
 
 &lt;div class="figure" style="text-align: center"&gt;
-&lt;img src="images/pkgdown-site.gif" alt="패키지 웹사이트" width="50%" /&gt;
-&lt;p class="caption"&gt;패키지 웹사이트&lt;/p&gt;
+&lt;img src="images/pkgdown-site.gif" alt="https://youngroklee-ml.github.io/dmtr/" width="70%" /&gt;
+&lt;p class="caption"&gt;https://youngroklee-ml.github.io/dmtr/&lt;/p&gt;
 &lt;/div&gt;
  
 
@@ -824,6 +945,31 @@ class: inverse, center, middle
   + 기존에 수행한 가장 간단한 분석 프로젝트로 시작
   
   + 하나의 함수부터 시작
+
+
+---
+
+# 현실적인 작업범위 및 기대수준 정의
+
+- 참고교재
+
+- 실무용 아님
+
+- 제한된 유연성
+
+---
+
+# 편리한 작업환경 선택
+
+.pull-left[
+
+- RStudio IDE
+
+- `{devtools}`, `{usethis}`, `{testthat}`, etc.
+
+- Git and GitHub
+
+]
 
 
     </textarea>
