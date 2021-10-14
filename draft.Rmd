@@ -861,7 +861,7 @@ knitr::include_graphics("images/data-raw-folder-files.png")
 
 - **data/**: 생성된 데이터 파일 (.rda)
 
-```{r data-folder-files, out.width='50%'}
+```{r data-folder-files, out.width='70%'}
 knitr::include_graphics("images/data-folder-files.png")
 ```
 
