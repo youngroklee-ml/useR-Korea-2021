@@ -260,52 +260,52 @@ knitr::include_graphics("images/rmd_image.png")
 
 --
 
-데이터 생성
+`df1 <- tibble()` \# 데이터 생성
 {{content}}
 
 --
 
-**함수 1**
+`f1 <- function() {}` \# **함수 정의**
 {{content}}
 
 --
 
-**함수 2**
+`f2 <- function() {}` \# **함수 정의**
 {{content}}
 
 --
 
-분석
+`df1 %>% f1() %>% f2()` \# 분석
 {{content}}
 
 --
 
-**함수 3**
+`f3 <- function() {}` \# **함수 정의**
 {{content}}
 
 --
 
-분석
+`df1 %>% f1() %>% f3()` \# 분석
 {{content}}
 
 --
 
-데이터 생성
+`df2 <- tibble()` \# 데이터 생성
 {{content}}
 
 --
 
-**함수 4**
+`f4 <- function() {}` \# **함수 정의**
 {{content}}
 
 --
 
-**함수 5**
+`f5 <- function() {}` \# **함수 정의**
 {{content}}
 
 --
 
-데이터 분석
+`df2 %>% f1() %>% f4() %>% f5()` \# 분석
 {{content}}
 
 --
@@ -648,7 +648,7 @@ knitr::include_graphics(c(
 
 ````
 ```{r}`r ''`
-library(dmtr)
+*library(dmtr)
 
 w_hat <- fisher_ld(
   binaryclass2, class, x1:x2)
@@ -784,7 +784,7 @@ knitr::include_graphics(c(
 library(testthat); library(dmtr);
 test_that("Fisher discriminant function matches", {
   local_edition(3)
-  expect_equal(
+  expect_equal( #<<
     fisher_ld(binaryclass2, class, x1:x2), #<<
     c(x1 = -1.5080, x2 = 1.5418), #<<
     tolerance = 1e-3,
@@ -1029,7 +1029,7 @@ knitr::include_graphics("images/nikolay-smeh-gPpbFaEkl00-unsplash.jpg")
 
 .pull-right[
 
-```{r recipe, fig.alt='https://www.10000recipe.com/recipe/6839413', out.width='100%'}
+```{r recipe, fig.alt='https://www.10000recipe.com/recipe/6839413', out.width='100%', fig.cap='https://www.10000recipe.com/recipe/6839413'}
 knitr::include_graphics("images/bibimbap-recipe-10000recipe.png")
 ```
 
@@ -1106,4 +1106,7 @@ class: center, middle
 
 
 ---
+class: center, middle, inverse
+
+# 감사합니다
 

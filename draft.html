@@ -185,52 +185,52 @@ class: middle, center
 
 --
 
-데이터 생성
+`df1 &lt;- tibble()` \# 데이터 생성
 {{content}}
 
 --
 
-**함수 1**
+`f1 &lt;- function() {}` \# **함수 정의**
 {{content}}
 
 --
 
-**함수 2**
+`f2 &lt;- function() {}` \# **함수 정의**
 {{content}}
 
 --
 
-분석
+`df1 %&gt;% f1() %&gt;% f2()` \# 분석
 {{content}}
 
 --
 
-**함수 3**
+`f3 &lt;- function() {}` \# **함수 정의**
 {{content}}
 
 --
 
-분석
+`df1 %&gt;% f1() %&gt;% f3()` \# 분석
 {{content}}
 
 --
 
-데이터 생성
+`df2 &lt;- tibble()` \# 데이터 생성
 {{content}}
 
 --
 
-**함수 4**
+`f4 &lt;- function() {}` \# **함수 정의**
 {{content}}
 
 --
 
-**함수 5**
+`f5 &lt;- function() {}` \# **함수 정의**
 {{content}}
 
 --
 
-데이터 분석
+`df2 %&gt;% f1() %&gt;% f4() %&gt;% f5()` \# 분석
 {{content}}
 
 --
@@ -579,7 +579,7 @@ fisher_ld &lt;- function(...) {...}
 
 ````
 ```{r}
-library(dmtr)
+*library(dmtr)
 
 w_hat &lt;- fisher_ld(
   binaryclass2, class, x1:x2)
@@ -695,7 +695,7 @@ layout: true
 library(testthat); library(dmtr);
 test_that("Fisher discriminant function matches", {
   local_edition(3)
-  expect_equal(
+* expect_equal(
 *   fisher_ld(binaryclass2, class, x1:x2),
 *   c(x1 = -1.5080, x2 = 1.5418),
     tolerance = 1e-3,
@@ -935,7 +935,10 @@ class: center, middle
 
 .pull-right[
 
-&lt;img src="images/bibimbap-recipe-10000recipe.png" title="https://www.10000recipe.com/recipe/6839413" alt="https://www.10000recipe.com/recipe/6839413" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/bibimbap-recipe-10000recipe.png" alt="https://www.10000recipe.com/recipe/6839413" width="100%" /&gt;
+&lt;p class="caption"&gt;https://www.10000recipe.com/recipe/6839413&lt;/p&gt;
+&lt;/div&gt;
 
 ]
 
@@ -1006,6 +1009,9 @@ class: center, middle
 
 
 ---
+class: center, middle, inverse
+
+# 감사합니다
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
