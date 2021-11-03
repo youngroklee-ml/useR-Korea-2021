@@ -130,28 +130,6 @@ knitr::include_graphics("images/book-cover.jpg")
 
 ---
 layout: false
-
-# 데이터마이닝 교재 참고자료 제작
-
-
-.pull-left[
-
-```{r rlogo, out.width="70%"}
-knitr::include_graphics(c("images/Rlogo.png"))
-```
-
-]
-
-.pull-right[
-
-```{r bookdownlogo, out.width="70%"}
-knitr::include_graphics(c("images/bookdown-logo.png"))
-```
-
-]
-
-
----
 # 데이터마이닝 교재 참고자료 제작
 
 .pull-left[
@@ -171,6 +149,11 @@ knitr::include_graphics("images/onlinebook-main.jpg")
 ]
 
 .pull-right[
+
+```{r rlogo-bookdown, out.width="30%"}
+knitr::include_graphics(c("images/Rlogo.png", "images/bookdown-logo.png"))
+```
+
   {{content}}
 ]
 
@@ -218,65 +201,29 @@ knitr::include_graphics("images/rmd_image.png")
 
 .pull-right[
 
-{{content}}
-
-]
-
---
-
 `df1 <- tibble()` \# 데이터 생성
-{{content}}
-
---
 
 `f1 <- function() {}` \# **함수 정의**
-{{content}}
-
---
 
 `f2 <- function() {}` \# **함수 정의**
-{{content}}
-
---
 
 `df1 %>% f1() %>% f2()` \# 분석
-{{content}}
-
---
 
 `f3 <- function() {}` \# **함수 정의**
-{{content}}
-
---
 
 `df1 %>% f1() %>% f3()` \# 분석
-{{content}}
-
---
 
 `df2 <- tibble()` \# 데이터 생성
-{{content}}
-
---
 
 `f4 <- function() {}` \# **함수 정의**
-{{content}}
-
---
 
 `f5 <- function() {}` \# **함수 정의**
-{{content}}
-
---
 
 `df2 %>% f1() %>% f4() %>% f5()` \# 분석
-{{content}}
-
---
 
 **...**
-{{content}}
 
+]
 
 ---
 
@@ -321,8 +268,6 @@ binaryclass2 %>%
 ```
 
 ]
-
---
 
 .pull-right[
 ```{r}
@@ -373,8 +318,6 @@ df %>% tidyr::unnest_legacy(a, b)
 ```
 
 ]
-
---
 
 .pull-right[
 
