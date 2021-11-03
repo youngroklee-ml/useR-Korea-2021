@@ -74,17 +74,6 @@ layout: true
 
 .pull-right[
 
-&lt;div class="figure" style="text-align: center"&gt;
-&lt;img src="draft_files/figure-html/lda-example-plot-1.png" alt="예제: 선형 분류분석" width="80%" /&gt;
-&lt;p class="caption"&gt;예제: 선형 분류분석&lt;/p&gt;
-&lt;/div&gt;
-
-]
-
----
-
-.pull-right[
-
 - 데이터 마이닝 이론과 알고리즘을 잘 이해할 수 있게 깔끔하게 구성된 교재
 {{content}}
 
@@ -305,8 +294,8 @@ library(dplyr)
 
 data(binaryclass2, package = "dmtr")
 
-library(MASS)
-fit &lt;- lda(class ~ x1 + x2, binaryclass2)
+*library(MASS)
+*fit &lt;- lda(class ~ x1 + x2, binaryclass2)
 
 binaryclass2 %&gt;% 
 * select(x1, x2)
@@ -333,7 +322,7 @@ df &lt;- tibble(
  b = list(1:2, 3),
  c = c(11, 22)
 )
-* df %&gt;% tidyr::unnest(a, b)
+*df %&gt;% tidyr::unnest(a, b)
 ```
 
 &lt;PRE class="fansi fansi-output"&gt;&lt;CODE&gt;&lt;span style='color: #555555;'&gt;# A tibble: 3 × 3&lt;/span&gt;
@@ -374,15 +363,9 @@ df &lt;- tibble(
 ]
 
 ---
+class: center, middle
 
-# 지금은 맞지만, 나중엔 틀릴수도?
-
-- 오류 발생 시 수정에 많은 시간 소요 
-
-- 코드 실행 오류는 없으나 결과가 틀린 경우는 오류 발견 자체가 어려움
-
-
-
+# 해결방안: 패키지 개발
 
 
 ---
@@ -484,7 +467,7 @@ print(w_hat)
 
 .pull-right[
 
-&lt;img src="images/data-raw-folder-icon.png" width="30%" style="display: block; margin: auto;" /&gt;&lt;img src="images/data-raw-binaryclass.png" width="30%" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/data-raw-folder-icon.png" width="20%" style="display: block; margin: auto;" /&gt;&lt;img src="images/data-raw-binaryclass.png" width="20%" style="display: block; margin: auto;" /&gt;
 
 
 ]
@@ -526,7 +509,7 @@ print(w_hat)
 
 .pull-right[
 
-&lt;img src="images/r-folder-icon.png" width="30%" style="display: block; margin: auto;" /&gt;&lt;img src="images/r-within-group.png" width="30%" style="display: block; margin: auto;" /&gt;&lt;img src="images/r-discriminant-functions.png" width="30%" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/r-folder-icon.png" width="20%" style="display: block; margin: auto;" /&gt;&lt;img src="images/r-within-group.png" width="20%" style="display: block; margin: auto;" /&gt;&lt;img src="images/r-discriminant-functions.png" width="20%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -567,7 +550,7 @@ fisher_ld &lt;- function(...) {...}
 
 .pull-right[
 
-&lt;img src="images/vignettes-folder-icon.png" width="30%" style="display: block; margin: auto;" /&gt;&lt;img src="images/vignettes-discriminant-analysis.png" width="30%" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/vignettes-folder-icon.png" width="20%" style="display: block; margin: auto;" /&gt;&lt;img src="images/vignettes-discriminant-analysis.png" width="20%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -592,7 +575,7 @@ print(w_hat)
 
 .pull-right[
 
-&lt;img src="images/vignettes-folder-icon.png" width="30%" style="display: block; margin: auto;" /&gt;&lt;img src="images/vignettes-discriminant-analysis.png" width="30%" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/vignettes-folder-icon.png" width="20%" style="display: block; margin: auto;" /&gt;&lt;img src="images/vignettes-discriminant-analysis.png" width="20%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -645,7 +628,7 @@ fisher_ld &lt;-
 
 .pull-right[
 
-&lt;img src="images/man-folder-icon.png" width="30%" style="display: block; margin: auto;" /&gt;&lt;img src="images/man-fisher_ld.png" width="30%" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/man-folder-icon.png" width="20%" style="display: block; margin: auto;" /&gt;&lt;img src="images/man-fisher_ld.png" width="20%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -686,10 +669,6 @@ layout: true
 
 ---
 
-&lt;img src="images/tests-folder-icon.png" width="10%" style="display: block; margin: auto;" /&gt;&lt;img src="images/tests-discriminant-functions.png" width="10%" style="display: block; margin: auto;" /&gt;
-
----
-
 
 ```r
 library(testthat); library(dmtr);
@@ -706,6 +685,10 @@ test_that("Fisher discriminant function matches", {
 
 &lt;PRE class="fansi fansi-output"&gt;&lt;CODE&gt;&lt;span style='color: #00BB00;'&gt;Test passed&lt;/span&gt; 🎊
 &lt;/CODE&gt;&lt;/PRE&gt;
+
+---
+
+&lt;img src="images/tests-folder-icon.png" width="8%" style="display: block; margin: auto;" /&gt;&lt;img src="images/tests-discriminant-functions.png" width="8%" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -917,7 +900,7 @@ class: center, middle
 
 # 데이터 분석가에게 패키지 개발이란?
 
-- 분석 과정과 및 결과의 배포
+- 분석 과정과 결과의 배포
 
   + 데이터, 분석 코드, 리포트 등
   
@@ -995,17 +978,13 @@ class: center, middle
 
   + 하나의 데이터, 하나의 함수, 하나의 테스트부터 시작
 
-  + 사용자부터 피드백 얻기
-
 --
 
 - 분석 업무와 패키지 개발의 선순환
 
   + 습득한 개발 방법을 분석 업무에 적용
 
-  + 분석 업무의 유연성 확장
-
-  + 새로운 분석 업무에서 패키지 개발의 아이디어 얻기
+  + 분석 업무에서 패키지 아이디어 확장
 
 
 ---
@@ -1013,6 +992,12 @@ class: center, middle, inverse
 
 # 감사합니다
 
+# **
+
+### Spectial thanks to 
+### 전치혁 교수님
+### 이혜선 교수님
+### 이종석 교수님
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

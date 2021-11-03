@@ -111,42 +111,6 @@ knitr::include_graphics("images/book-cover.jpg")
 
 .pull-right[
 
-```{r lda-example-plot, echo=FALSE, out.width='80%', fig.align='center', fig.cap="예제: 선형 분류분석"}
-data(binaryclass2, package = "dmtr")
-
-binaryclass2 %>% 
-  ggplot(aes(x = x1, y = x2, color = class)) +
-  geom_abline(slope = 0.9781, intercept = 0.3414, 
-              color = "grey20", linetype = "dashed") +
-  geom_point(size = 5) +
-  geom_text(aes(label = class), vjust = -1, size = 5) +
-  scale_x_continuous(
-    breaks = seq(1, 10, by = 1),
-    minor_breaks = NULL,
-    expand = expansion(mult = 0.05)
-  ) +
-  scale_y_continuous(
-    breaks = seq(1, 10, by = 1),
-    minor_breaks = NULL,
-    expand = expansion(mult = 0.05)
-  ) +
-  scale_color_manual(
-    values = c(`1` = "steelblue", `2` = "firebrick")
-  ) +
-  theme_light() +
-  theme(
-    legend.position = "none",
-    text = element_text(size = 20),
-    aspect.ratio = 1
-  )
-```
-
-]
-
----
-
-.pull-right[
-
 - 데이터 마이닝 이론과 알고리즘을 잘 이해할 수 있게 깔끔하게 구성된 교재
 {{content}}
 
@@ -370,8 +334,8 @@ library(dplyr)
 
 data(binaryclass2, package = "dmtr")
 
-library(MASS)
-fit <- lda(class ~ x1 + x2, binaryclass2)
+library(MASS) #<<
+fit <- lda(class ~ x1 + x2, binaryclass2) #<<
 
 binaryclass2 %>% 
   select(x1, x2) #<<
@@ -396,7 +360,7 @@ df <- tibble(
  b = list(1:2, 3),
  c = c(11, 22)
 )
-* df %>% tidyr::unnest(a, b)
+*df %>% tidyr::unnest(a, b)
 ```
 
 ```{r unnest-old}
@@ -429,15 +393,9 @@ df %>% tidyr::unnest(c(a, b)) #<<
 ]
 
 ---
+class: center, middle
 
-# 지금은 맞지만, 나중엔 틀릴수도?
-
-- 오류 발생 시 수정에 많은 시간 소요 
-
-- 코드 실행 오류는 없으나 결과가 틀린 경우는 오류 발견 자체가 어려움
-
-
-
+# 해결방안: 패키지 개발
 
 
 ---
@@ -540,7 +498,7 @@ print(w_hat)
 
 .pull-right[
 
-```{r data-raw-example, out.width='30%', fig.align='center'}
+```{r data-raw-example, out.width='20%', fig.align='center'}
 knitr::include_graphics(c(
   "images/data-raw-folder-icon.png", 
   "images/data-raw-binaryclass.png"))
@@ -586,7 +544,7 @@ print(w_hat)
 
 .pull-right[
 
-```{r r-example, out.width='30%', fig.align='center'}
+```{r r-example, out.width='20%', fig.align='center'}
 knitr::include_graphics(c(
   "images/r-folder-icon.png", 
   "images/r-within-group.png",
@@ -632,7 +590,7 @@ fisher_ld <- function(...) {...}
 
 .pull-right[
 
-```{r vignettes-example, out.width='30%', fig.align='center'}
+```{r vignettes-example, out.width='20%', fig.align='center'}
 knitr::include_graphics(c(
   "images/vignettes-folder-icon.png", 
   "images/vignettes-discriminant-analysis.png"))
@@ -661,7 +619,7 @@ print(w_hat)
 
 .pull-right[
 
-```{r vignettes-example-2, out.width='30%', fig.align='center'}
+```{r vignettes-example-2, out.width='20%', fig.align='center'}
 knitr::include_graphics(c(
   "images/vignettes-folder-icon.png", 
   "images/vignettes-discriminant-analysis.png"))
@@ -722,7 +680,7 @@ fisher_ld <-
 
 .pull-right[
 
-```{r man-example, out.width='30%', fig.align='center'}
+```{r man-example, out.width='20%', fig.align='center'}
 knitr::include_graphics(c(
   "images/man-folder-icon.png", 
   "images/man-fisher_ld.png"))
@@ -772,14 +730,6 @@ knitr::include_graphics("images/lda-book-example-function.png")
 
 ---
 
-```{r tests-example, out.width='10%', fig.align='center'}
-knitr::include_graphics(c(
-  "images/tests-folder-icon.png", 
-  "images/tests-discriminant-functions.png"))
-```
-
----
-
 ```{r lda-test, echo = TRUE}
 library(testthat); library(dmtr);
 test_that("Fisher discriminant function matches", {
@@ -791,6 +741,14 @@ test_that("Fisher discriminant function matches", {
     ignore_attr = TRUE
   )
 })
+```
+
+---
+
+```{r tests-example, out.width='8%', fig.align='center'}
+knitr::include_graphics(c(
+  "images/tests-folder-icon.png", 
+  "images/tests-discriminant-functions.png"))
 ```
 
 
@@ -1009,7 +967,7 @@ class: center, middle
 
 # 데이터 분석가에게 패키지 개발이란?
 
-- 분석 과정과 및 결과의 배포
+- 분석 과정과 결과의 배포
 
   + 데이터, 분석 코드, 리포트 등
   
@@ -1092,17 +1050,13 @@ class: center, middle
 
   + 하나의 데이터, 하나의 함수, 하나의 테스트부터 시작
 
-  + 사용자부터 피드백 얻기
-
 --
 
 - 분석 업무와 패키지 개발의 선순환
 
   + 습득한 개발 방법을 분석 업무에 적용
 
-  + 분석 업무의 유연성 확장
-
-  + 새로운 분석 업무에서 패키지 개발의 아이디어 얻기
+  + 분석 업무에서 패키지 아이디어 확장
 
 
 ---
@@ -1110,3 +1064,9 @@ class: center, middle, inverse
 
 # 감사합니다
 
+# **
+
+### Spectial thanks to 
+### 전치혁 교수님
+### 이혜선 교수님
+### 이종석 교수님
