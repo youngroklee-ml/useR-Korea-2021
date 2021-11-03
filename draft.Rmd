@@ -734,70 +734,126 @@ class: center, middle
 
 # 체계적인 프로젝트 폴더 구조
 
----
-
-# 체계적인 프로젝트 폴더 구조
-
-- 프로젝트 폴더
-
-```{r package-folder-structure, out.width='70%'}
-knitr::include_graphics("images/package-folder-structure.png")
-```
-
 
 ---
 
 # 체계적인 프로젝트 폴더 구조
 
-- **data-raw/**: 데이터 생성/쿼리 R 스크립트 (.R)
+.pull-left[
+
+- 일관된 프로젝트 폴더 구조
+
+  + **data-raw/: 데이터 생성/쿼리 R 스크립트 (.R)**
+  
+]
+
+.pull-right[
 
 ```{r data-raw-folder-files, out.width='70%'}
 knitr::include_graphics("images/data-raw-folder-files.png")
 ```
 
+]
 
 ---
 
 # 체계적인 프로젝트 폴더 구조
 
-- **data/**: 생성된 데이터 파일 (.rda)
+.pull-left[
+
+- 일관된 프로젝트 폴더 구조
+
+  + data-raw/: 데이터 생성/쿼리 R 스크립트 (.R)
+  
+  + **data/: 생성된 데이터 파일 (.rda)**
+  
+]
+
+.pull-right[
 
 ```{r data-folder-files, out.width='70%'}
 knitr::include_graphics("images/data-folder-files.png")
 ```
 
+]
 
 ---
 
 # 체계적인 프로젝트 폴더 구조
 
-- **R/**: 재사용을 위해 모듈화된 데이터 분석 함수 (.R)
+.pull-left[
+
+- 일관된 프로젝트 폴더 구조
+
+  + data-raw/: 데이터 생성/쿼리 R 스크립트 (.R)
+  
+  + data/: 생성된 데이터 파일 (.rda)
+  
+  + **R/: 재사용을 위해 모듈화된 데이터 분석 함수 (.R)**
+
+]
+
+.pull-right[
 
 ```{r r-folder-files, out.width='70%'}
 knitr::include_graphics("images/r-folder-files.png")
 ```
 
+]
+
 ---
 
 # 체계적인 프로젝트 폴더 구조
 
-- **vignettes/**: 데이터 분석 문서 소스 (.Rmd)
+.pull-left[
+
+- 일관된 프로젝트 폴더 구조
+
+  + data-raw/: 데이터 생성/쿼리 R 스크립트 (.R)
+  
+  + data/: 생성된 데이터 파일 (.rda)
+  
+  + R/: 재사용을 위해 모듈화된 데이터 분석 함수 (.R)
+  
+  + **vignettes/: 데이터 분석 문서 소스 (.Rmd)**
+
+]
+
+.pull-right[
 
 ```{r vignettes-folder-files, out.width='70%'}
 knitr::include_graphics("images/vignettes-folder-files.png")
 ```
 
+]
 
 ---
 
 # 체계적인 프로젝트 폴더 구조
 
-- **tests/**: 코드 테스트 (.R)
+.pull-left[
+
+- 일관된 프로젝트 폴더 구조
+
+  + data-raw/: 데이터 생성/쿼리 R 스크립트 (.R)
+  
+  + data/: 생성된 데이터 파일 (.rda)
+  
+  + R/: 재사용을 위해 모듈화된 데이터 분석 함수 (.R)
+  
+  + vignettes/: 데이터 분석 문서 소스 (.Rmd)
+
+  + **tests/: 코드 테스트 (.R)**
+
+]
+
+.pull-right[
 
 ```{r tests-folder-files, out.width='70%'}
 knitr::include_graphics("images/testthat-folder-files.png")
 ```
 
+]
 
 
 ---
