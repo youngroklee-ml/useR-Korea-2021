@@ -93,8 +93,6 @@ class: center, middle
 # 데이터마이닝 교재 참고자료 제작
 
 ---
-layout: true
-
 # 데이터마이닝 교재 참고자료 제작
 
 .pull-left[
@@ -105,9 +103,7 @@ knitr::include_graphics("images/book-cover.jpg")
 
 ]
 
----
-
----
+--
 
 .pull-right[
 
@@ -129,7 +125,6 @@ knitr::include_graphics("images/book-cover.jpg")
 
 
 ---
-layout: false
 # 데이터마이닝 교재 참고자료 제작
 
 .pull-left[
@@ -186,10 +181,10 @@ knitr::include_graphics("images/bookdown-folder.png")
 ---
 class: middle, center
 
-# 사용자 함수의 난립
+# 정돈되지 않은 코드
 
 ---
-# 사용자 함수의 난립
+# 정돈되지 않은 코드
 
 .pull-left[
 
@@ -227,7 +222,7 @@ knitr::include_graphics("images/rmd_image.png")
 
 ---
 
-# 사용자 함수의 난립
+# 정돈되지 않은 코드
 
 .pull-left[
 
@@ -635,7 +630,7 @@ knitr::include_graphics(c(
 
 .pull-right[
 
-```{r r-function-manual, echo = FALSE, fig.cap="함수 도움말 작성 및 컴파일된 도움말 파일 (.Rd)", out.width='90%', fig.align='center'}
+```{r r-function-manual, echo = FALSE, fig.cap="컴파일된 도움말 파일 (.Rd)", out.width='90%', fig.align='center'}
 knitr::include_graphics("images/r-function-manual-fisher_ld.png")
 ```
 
@@ -645,11 +640,11 @@ knitr::include_graphics("images/r-function-manual-fisher_ld.png")
 class: middle, center
 layout: false
 
-# 코드 테스트
+# 코드 테스트 작성
 
 ---
 
-# 코드 테스트
+# 코드 테스트 작성
 
 ```{r testthat-logo, out.width='30%'}
 knitr::include_graphics(
@@ -661,7 +656,7 @@ knitr::include_graphics(
 ---
 layout: true
 
-# 코드 테스트
+# 코드 테스트 작성
 
 예제 결과 재현성 테스트
 
@@ -1033,8 +1028,6 @@ class: center, middle
 
 # 어떻게 시작할까?
 
---
-
 - 마음가짐: 위축되거나 포기하지 않기
 
   + 단발성 분석 업무보다 많은 시간과 노력이 소요
@@ -1065,7 +1058,7 @@ class: center, middle, inverse
 
 # **
 
-### Spectial thanks to 
-### 전치혁 교수님
-### 이혜선 교수님
-### 이종석 교수님
+#### 특히 고마운 분들: 
+#### 전치혁 교수님
+#### 이혜선 교수님
+#### 이종석 교수님
