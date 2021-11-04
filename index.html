@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>데이터 분석가의 R 패키지 개발 도전기</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="이영록" />
+    <meta name="date" content="2021-11-19" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/rconf.css" type="text/css" />
+    <link rel="stylesheet" href="css/rconf-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+class: title-slide, left, bottom
+
+# 데이터 분석가의 R 패키지 개발 도전기
+----
+### 이영록
+### 2021-11-19
+
+&lt;STYLE type='text/css' scoped&gt;
+PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
+&lt;/STYLE&gt;
+
+
+---
+class: inverse, left, middle
+
+# 발표 개요
+
+----
+
+  - 패키지 개발 배경
+  
+  - 주요 작업 과정
+
+  - 데이터 분석가가 배우면 유용한 개발자 관점
+
+  - 맺음말
+
+
+---
+class: inverse, center, middle
+
+# 패키지 개발 배경
+
+---
+class: center, middle
+
+# 데이터마이닝 교재 참고자료 제작
+
+---
+# 데이터마이닝 교재 참고자료 제작
+
+.pull-left[
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/book-cover.jpg" alt="데이터마이닝 기법과 응용 / 한나래출판사 / 전치혁 저" height="400px" /&gt;
+&lt;p class="caption"&gt;데이터마이닝 기법과 응용 / 한나래출판사 / 전치혁 저&lt;/p&gt;
+&lt;/div&gt;
+
+]
+
+--
+
+.pull-right[
+
+- 데이터 마이닝 이론과 알고리즘을 잘 이해할 수 있게 깔끔하게 구성된 교재
+{{content}}
+
+]
+
+--
+
+- 간단하면서 결과를 눈으로 확인할 수 있는 예제들
+{{content}}
+
+--
+
+- **예제 결과 도출을 위한 프로그램 구현은 제공되지 않음**
+{{content}}
+
+
+
+---
+# 데이터마이닝 교재 참고자료 제작
+
+.pull-left[
+
+
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/onlinebook-main.jpg" alt="데이터마이닝 with R / 전치혁, 이혜선, 이종석, 이영록 / http://youngroklee-ml.github.io/data-mining-book/" height="400px" /&gt;
+&lt;p class="caption"&gt;데이터마이닝 with R / 전치혁, 이혜선, 이종석, 이영록 / http://youngroklee-ml.github.io/data-mining-book/&lt;/p&gt;
+&lt;/div&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="images/Rlogo.png" width="30%" style="display: block; margin: auto;" /&gt;&lt;img src="images/bookdown-logo.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+  {{content}}
+]
+
+--
+
+- 온라인 버전 보조 교재로 활용
+{{content}}
+
+--
+
+- 예제를 R로 구현한 내용을 추가
+{{content}}
+
+--
+
+- 단순히 기존 R 패키지를 사용하는 것보다 깊이 있는 내용을 제공
+{{content}}
+
+
+---
+
+# 데이터마이닝 교재 참고자료 제작
+
+
+&lt;img src="images/bookdown-folder.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+
+---
+class: middle, center
+
+# 정돈되지 않은 코드
+
+---
+# 정돈되지 않은 코드
+
+.pull-left[
+
+&lt;img src="images/rmd_image.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+`df1 &lt;- tibble()` \# 데이터 생성
+
+`f1 &lt;- function() {}` \# **함수 정의**
+
+`f2 &lt;- function() {}` \# **함수 정의**
+
+`df1 %&gt;% f1() %&gt;% f2()` \# 분석
+
+`f3 &lt;- function() {}` \# **함수 정의**
+
+`df1 %&gt;% f1() %&gt;% f3()` \# 분석
+
+`df2 &lt;- tibble()` \# 데이터 생성
+
+`f4 &lt;- function() {}` \# **함수 정의**
+
+`f5 &lt;- function() {}` \# **함수 정의**
+
+`df2 %&gt;% f1() %&gt;% f4() %&gt;% f5()` \# 분석
+
+**...**
+
+]
+
+---
+
+# 정돈되지 않은 코드
+
+.pull-left[
+
+&lt;img src="images/bookdown-folder.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-right[
+
+&lt;img src="images/xavi-cabrera-kn-UmDZQDjM-unsplash.jpg" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+class: middle, center
+
+# 지금은 맞지만, 나중엔 틀릴수도?
+
+---
+# 지금은 맞지만, 나중엔 틀릴수도?
+
+.pull-left[
+
+
+```r
+library(dplyr)
+
+data(binaryclass2, package = "dmtr")
+
+binaryclass2 %&gt;% 
+* select(x1, x2)
+```
+
+&lt;PRE class="fansi fansi-output"&gt;&lt;CODE&gt;&lt;span style='color: #555555;'&gt;# A tibble: 9 × 2&lt;/span&gt;
+     x1    x2
+  &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;dbl&amp;gt;&lt;/span&gt; &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;dbl&amp;gt;&lt;/span&gt;
+&lt;span style='color: #555555;'&gt;1&lt;/span&gt;     5     7
+&lt;span style='color: #555555;'&gt;2&lt;/span&gt;     4     3
+&lt;span style='color: #555555;'&gt;3&lt;/span&gt;     7     8
+&lt;span style='color: #555555;'&gt;4&lt;/span&gt;     8     6
+&lt;span style='color: #555555;'&gt;5&lt;/span&gt;     3     6
+&lt;span style='color: #555555;'&gt;6&lt;/span&gt;     2     5
+&lt;span style='color: #555555;'&gt;7&lt;/span&gt;     6     6
+&lt;span style='color: #555555;'&gt;8&lt;/span&gt;     9     6
+&lt;span style='color: #555555;'&gt;9&lt;/span&gt;     5     4
+&lt;/CODE&gt;&lt;/PRE&gt;
+
+]
+
+.pull-right[
+
+
+
+```r
+library(dplyr)
+
+data(binaryclass2, package = "dmtr")
+
+*library(MASS)
+*fit &lt;- lda(class ~ x1 + x2, binaryclass2)
+
+binaryclass2 %&gt;% 
+* select(x1, x2)
+```
+
+```
+Error in select(., x1, x2): unused arguments (x1, x2)
+```
+
+
+
+]
+
+---
+# 지금은 맞지만, 나중엔 틀릴수도?
+
+.pull-left[
+
+**`{tidyr}` 0.x**
+
+```r
+df &lt;- tibble(
+ a = list(c("a", "b"), "c"),
+ b = list(1:2, 3),
+ c = c(11, 22)
+)
+*df %&gt;% tidyr::unnest(a, b)
+```
+
+&lt;PRE class="fansi fansi-output"&gt;&lt;CODE&gt;&lt;span style='color: #555555;'&gt;# A tibble: 3 × 3&lt;/span&gt;
+      c a         b
+  &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;dbl&amp;gt;&lt;/span&gt; &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;chr&amp;gt;&lt;/span&gt; &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;dbl&amp;gt;&lt;/span&gt;
+&lt;span style='color: #555555;'&gt;1&lt;/span&gt;    11 a         1
+&lt;span style='color: #555555;'&gt;2&lt;/span&gt;    11 b         2
+&lt;span style='color: #555555;'&gt;3&lt;/span&gt;    22 c         3
+&lt;/CODE&gt;&lt;/PRE&gt;
+
+]
+
+.pull-right[
+
+**`{tidyr}` 1.0.0**
+
+
+```r
+df &lt;- tibble(
+ a = list(c("a", "b"), "c"),
+ b = list(1:2, 3),
+ c = c(11, 22)
+)
+*df %&gt;% tidyr::unnest(c(a, b))
+```
+
+&lt;PRE class="fansi fansi-output"&gt;&lt;CODE&gt;&lt;span style='color: #555555;'&gt;# A tibble: 3 × 3&lt;/span&gt;
+  a         b     c
+  &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;chr&amp;gt;&lt;/span&gt; &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;dbl&amp;gt;&lt;/span&gt; &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;dbl&amp;gt;&lt;/span&gt;
+&lt;span style='color: #555555;'&gt;1&lt;/span&gt; a         1    11
+&lt;span style='color: #555555;'&gt;2&lt;/span&gt; b         2    11
+&lt;span style='color: #555555;'&gt;3&lt;/span&gt; c         3    22
+&lt;/CODE&gt;&lt;/PRE&gt;
+
+
+]
+
+---
+class: center, middle
+
+# 해결방안: 패키지 개발
+
+
+---
+class: inverse, center, middle
+layout: false
+
+# 주요 작업 과정
+
+---
+class: center, middle
+
+.pull-left[
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/r-pkgs-cover.png" alt="R Packages / O'Reilly / Hadley Wickham" width="80%" /&gt;
+&lt;p class="caption"&gt;R Packages / O'Reilly / Hadley Wickham&lt;/p&gt;
+&lt;/div&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="images/devtools-logo.svg" width="80%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+class: center, middle
+
+# R Markdown 문서 해체 및 재구성
+
+---
+
+# R Markdown 문서 해체 및 재구성
+
+.pull-left[
+
+````
+```{r}
+binaryclass2 &lt;- tribble(
+  ~id, ~x1, ~x2, ~class,
+  1, 5, 7, 1,
+  2, 4, 3, 2,
+  3, 7, 8, 2,
+  4, 8, 6, 2,
+  5, 3, 6, 1,
+  6, 2, 5, 1,
+  7, 6, 6, 1,
+  8, 9, 6, 2,
+  9, 5, 4, 2
+)
+
+group_mean &lt;- function(...) {...}
+pooled_variance &lt;- function(...) {...}
+fisher_ld &lt;- function(...) {...}
+
+w_hat &lt;- fisher_ld(
+  binaryclass2, class, x1:x2)
+print(w_hat)
+```
+````
+
+]
+
+---
+
+# R Markdown 문서 해체 및 재구성
+
+.pull-left[
+
+````
+```{r}
+*binaryclass2 &lt;- tribble(
+*  ~id, ~x1, ~x2, ~class,
+*  1, 5, 7, 1,
+*  2, 4, 3, 2,
+*  3, 7, 8, 2,
+*  4, 8, 6, 2,
+*  5, 3, 6, 1,
+*  6, 2, 5, 1,
+*  7, 6, 6, 1,
+*  8, 9, 6, 2,
+*  9, 5, 4, 2
+*)
+
+group_mean &lt;- function(...) {...}
+pooled_variance &lt;- function(...) {...}
+fisher_ld &lt;- function(...) {...}
+
+w_hat &lt;- fisher_ld(
+  binaryclass2, class, x1:x2)
+print(w_hat)
+```
+````
+
+]
+
+
+.pull-right[
+
+&lt;img src="images/data-raw-folder-icon.png" width="20%" style="display: block; margin: auto;" /&gt;&lt;img src="images/data-raw-binaryclass.png" width="20%" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+
+---
+
+# R Markdown 문서 해체 및 재구성
+
+.pull-left[
+
+````
+```{r}
+binaryclass2 &lt;- tribble(
+  ~id, ~x1, ~x2, ~class,
+  1, 5, 7, 1,
+  2, 4, 3, 2,
+  3, 7, 8, 2,
+  4, 8, 6, 2,
+  5, 3, 6, 1,
+  6, 2, 5, 1,
+  7, 6, 6, 1,
+  8, 9, 6, 2,
+  9, 5, 4, 2
+)
+
+*group_mean &lt;- function(...) {...}
+*pooled_variance &lt;- function(...) {...}
+*fisher_ld &lt;- function(...) {...}
+
+w_hat &lt;- fisher_ld(
+  binaryclass2, class, x1:x2)
+print(w_hat)
+```
+````
+
+]
+
+
+.pull-right[
+
+&lt;img src="images/r-folder-icon.png" width="20%" style="display: block; margin: auto;" /&gt;&lt;img src="images/r-within-group.png" width="20%" style="display: block; margin: auto;" /&gt;&lt;img src="images/r-discriminant-functions.png" width="20%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+
+# R Markdown 문서 해체 및 재구성
+
+.pull-left[
+
+````
+```{r}
+binaryclass2 &lt;- tribble(
+  ~id, ~x1, ~x2, ~class,
+  1, 5, 7, 1,
+  2, 4, 3, 2,
+  3, 7, 8, 2,
+  4, 8, 6, 2,
+  5, 3, 6, 1,
+  6, 2, 5, 1,
+  7, 6, 6, 1,
+  8, 9, 6, 2,
+  9, 5, 4, 2
+)
+
+group_mean &lt;- function(...) {...}
+pooled_variance &lt;- function(...) {...}
+fisher_ld &lt;- function(...) {...}
+
+*w_hat &lt;- fisher_ld(
+*  binaryclass2, class, x1:x2)
+*print(w_hat)
+```
+````
+
+]
+
+
+.pull-right[
+
+&lt;img src="images/vignettes-folder-icon.png" width="20%" style="display: block; margin: auto;" /&gt;&lt;img src="images/vignettes-discriminant-analysis.png" width="20%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+# R Markdown 문서 해체 및 재구성
+
+.pull-left[
+
+````
+```{r}
+*library(dmtr)
+
+w_hat &lt;- fisher_ld(
+  binaryclass2, class, x1:x2)
+print(w_hat)
+```
+````
+
+]
+
+
+.pull-right[
+
+&lt;img src="images/vignettes-folder-icon.png" width="20%" style="display: block; margin: auto;" /&gt;&lt;img src="images/vignettes-discriminant-analysis.png" width="20%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+
+---
+class: middle, center
+
+# 함수 도움말 문서 작성
+
+---
+
+# 함수 도움말 문서 작성
+
+&lt;img src="images/roxygen2-logo.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+---
+layout: true
+
+# 함수 도움말 문서 작성
+
+.pull-left[
+
+```r
+#' 피셔 선형 판별 함수.
+#'
+#' 두 범주 데이터를 구분하는 피셔 선형 판별함수의 
+#' 계수를 추정한다.
+#'
+#' @param .data 관측 데이터 프레임.
+#' @param .group_var 범주변수.
+#' @param .xvar 범주 분류에 사용될 변수.
+#' @return 선형 함수의 계수 벡터.
+#'
+#' @examples
+#' data(binaryclass2, package = "dmtr")
+#' fisher_ld(binaryclass2, class, c(x1, x2))
+#'
+#' @keywords discriminant-functions
+#' @export
+fisher_ld &lt;- 
+  function(.data, .group_var, .xvar) {...}
+```
+
+]
+
+---
+
+---
+
+.pull-right[
+
+&lt;img src="images/man-folder-icon.png" width="20%" style="display: block; margin: auto;" /&gt;&lt;img src="images/man-fisher_ld.png" width="20%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+.pull-right[
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/r-function-manual-fisher_ld.png" alt="컴파일된 도움말 파일 (.Rd)" width="90%" /&gt;
+&lt;p class="caption"&gt;컴파일된 도움말 파일 (.Rd)&lt;/p&gt;
+&lt;/div&gt;
+
+]
+
+---
+class: middle, center
+layout: false
+
+# 코드 테스트 작성
+
+---
+
+# 코드 테스트 작성
+
+&lt;img src="images/testthat-logo.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+
+---
+layout: true
+
+# 코드 테스트 작성
+
+예제 결과 재현성 테스트
+
+&lt;img src="images/lda-book-example-function.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+---
+
+
+```r
+library(testthat); library(dmtr);
+test_that("Fisher discriminant function matches", {
+  local_edition(3)
+* expect_equal(
+*   fisher_ld(binaryclass2, class, x1:x2),
+*   c(x1 = -1.5080, x2 = 1.5418),
+    tolerance = 1e-3,
+    ignore_attr = TRUE
+  )
+})
+```
+
+&lt;PRE class="fansi fansi-output"&gt;&lt;CODE&gt;&lt;span style='color: #00BB00;'&gt;Test passed&lt;/span&gt; 🌈
+&lt;/CODE&gt;&lt;/PRE&gt;
+
+---
+
+&lt;img src="images/tests-folder-icon.png" width="8%" style="display: block; margin: auto;" /&gt;&lt;img src="images/tests-discriminant-functions.png" width="8%" style="display: block; margin: auto;" /&gt;
+
+
+---
+class: middle, center
+layout: false
+
+# 패키지 웹사이트 생성
+
+---
+
+# 패키지 웹사이트 생성 
+
+&lt;img src="images/pkgdown-logo.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# 패키지 웹사이트 생성 
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/pkgdown-site.gif" alt="https://youngroklee-ml.github.io/dmtr/" width="70%" /&gt;
+&lt;p class="caption"&gt;https://youngroklee-ml.github.io/dmtr/&lt;/p&gt;
+&lt;/div&gt;
+ 
+
+
+
+
+---
+class: inverse, center, middle
+
+# 데이터 분석가가 배우면 유용한 개발자 관점
+
+---
+class: center, middle
+
+# 체계적인 프로젝트 폴더 구조
+
+
+---
+
+# 체계적인 프로젝트 폴더 구조
+
+.pull-left[
+
+- 일관된 프로젝트 폴더 구조
+
+  + **data-raw/: 데이터 생성/쿼리 R 스크립트 (.R)**
+  
+]
+
+.pull-right[
+
+&lt;img src="images/data-raw-folder-files.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+# 체계적인 프로젝트 폴더 구조
+
+.pull-left[
+
+- 일관된 프로젝트 폴더 구조
+
+  + data-raw/: 데이터 생성/쿼리 R 스크립트 (.R)
+  
+  + **data/: 생성된 데이터 파일 (.rda)**
+  
+]
+
+.pull-right[
+
+&lt;img src="images/data-folder-files.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+# 체계적인 프로젝트 폴더 구조
+
+.pull-left[
+
+- 일관된 프로젝트 폴더 구조
+
+  + data-raw/: 데이터 생성/쿼리 R 스크립트 (.R)
+  
+  + data/: 생성된 데이터 파일 (.rda)
+  
+  + **R/: 재사용을 위해 모듈화된 데이터 분석 함수 (.R)**
+
+]
+
+.pull-right[
+
+&lt;img src="images/r-folder-files.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+# 체계적인 프로젝트 폴더 구조
+
+.pull-left[
+
+- 일관된 프로젝트 폴더 구조
+
+  + data-raw/: 데이터 생성/쿼리 R 스크립트 (.R)
+  
+  + data/: 생성된 데이터 파일 (.rda)
+  
+  + R/: 재사용을 위해 모듈화된 데이터 분석 함수 (.R)
+  
+  + **vignettes/: 데이터 분석 문서 소스 (.Rmd)**
+
+]
+
+.pull-right[
+
+&lt;img src="images/vignettes-folder-files.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+# 체계적인 프로젝트 폴더 구조
+
+.pull-left[
+
+- 일관된 프로젝트 폴더 구조
+
+  + data-raw/: 데이터 생성/쿼리 R 스크립트 (.R)
+  
+  + data/: 생성된 데이터 파일 (.rda)
+  
+  + R/: 재사용을 위해 모듈화된 데이터 분석 함수 (.R)
+  
+  + vignettes/: 데이터 분석 문서 소스 (.Rmd)
+
+  + **tests/: 코드 테스트 (.R)**
+
+]
+
+.pull-right[
+
+&lt;img src="images/testthat-folder-files.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+
+# 체계적인 프로젝트 폴더 구조
+
+.pull-left[
+
+- 일관된 프로젝트 폴더 구조
+
+  + **data-raw/**: 데이터 생성/쿼리 R 스크립트 (.R)
+  
+  + **data/**: 생성된 데이터 파일 (.rda)
+  
+  + **R/**: 재사용을 위해 모듈화된 데이터 분석 함수 (.R)
+  
+  + **vignettes/**: 데이터 분석 문서 소스 (.Rmd)
+
+  + **tests/**: 코드 테스트 (.R)
+
+]
+
+.pull-right[
+
+&lt;img src="images/mourizal-zativa-gNMVpAPe3PE-unsplash.jpg" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+class: center, middle
+
+# 리팩토링
+
+---
+
+# 리팩토링
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/refact2.jpeg" alt="Refactoring: improving the design of existing code / Addison-Wesley Professional / Martin Fowler" width="30%" /&gt;
+&lt;p class="caption"&gt;Refactoring: improving the design of existing code / Addison-Wesley Professional / Martin Fowler&lt;/p&gt;
+&lt;/div&gt;
+
+---
+
+# 리팩토링
+
+- 코드 테스트
+
+&lt;img src="images/test-results.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# 리팩토링
+
+- 네임 스페이스 명시화
+
+.pull-left[
+
+```r
+library(dmtr)
+*library(corrr)
+library(dplyr)
+binaryclass2 %&gt;% 
+  select(x1, x2) %&gt;% 
+* correlate()
+```
+
+&lt;PRE class="fansi fansi-output"&gt;&lt;CODE&gt;&lt;span style='color: #555555;'&gt;# A tibble: 2 × 3&lt;/span&gt;
+  term      x1     x2
+  &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;chr&amp;gt;&lt;/span&gt;  &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;dbl&amp;gt;&lt;/span&gt;  &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;dbl&amp;gt;&lt;/span&gt;
+&lt;span style='color: #555555;'&gt;1&lt;/span&gt; x1    &lt;span style='color: #BB0000;'&gt;NA&lt;/span&gt;      0.411
+&lt;span style='color: #555555;'&gt;2&lt;/span&gt; x2     0.411 &lt;span style='color: #BB0000;'&gt;NA&lt;/span&gt;    
+&lt;/CODE&gt;&lt;/PRE&gt;
+]
+
+.pull-right[
+
+```r
+library(dmtr)
+library(dplyr)
+binaryclass2 %&gt;% 
+  select(x1, x2) %&gt;% 
+* corrr::correlate()
+```
+
+&lt;PRE class="fansi fansi-output"&gt;&lt;CODE&gt;&lt;span style='color: #555555;'&gt;# A tibble: 2 × 3&lt;/span&gt;
+  term      x1     x2
+  &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;chr&amp;gt;&lt;/span&gt;  &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;dbl&amp;gt;&lt;/span&gt;  &lt;span style='color: #555555; font-style: italic;'&gt;&amp;lt;dbl&amp;gt;&lt;/span&gt;
+&lt;span style='color: #555555;'&gt;1&lt;/span&gt; x1    &lt;span style='color: #BB0000;'&gt;NA&lt;/span&gt;      0.411
+&lt;span style='color: #555555;'&gt;2&lt;/span&gt; x2     0.411 &lt;span style='color: #BB0000;'&gt;NA&lt;/span&gt;    
+&lt;/CODE&gt;&lt;/PRE&gt;
+
+]  
+
+
+---
+
+# 리팩토링
+
+- 메타 프로그래밍
+
+  + 하드코딩 지양
+
+&lt;img src="images/rlang-logo.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+
+---
+class: inverse, center, middle
+
+# 맺음말
+
+---
+class: center, middle
+
+# 데이터 분석가에게 패키지 개발이란?
+
+---
+
+# 데이터 분석가에게 패키지 개발이란?
+
+- 분석 과정과 결과의 배포
+
+  + 데이터, 분석 코드, 리포트 등
+  
+  + 재현가능성 검증
+
+--
+
+.pull-left[
+
+&lt;img src="images/nikolay-smeh-gPpbFaEkl00-unsplash.jpg" title="https://unsplash.com/photos/gPpbFaEkl00" alt="https://unsplash.com/photos/gPpbFaEkl00" width="80%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-right[
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/bibimbap-recipe-10000recipe.png" alt="https://www.10000recipe.com/recipe/6839413" width="100%" /&gt;
+&lt;p class="caption"&gt;https://www.10000recipe.com/recipe/6839413&lt;/p&gt;
+&lt;/div&gt;
+
+]
+
+---
+
+# 데이터 분석가에게 패키지 개발이란?
+
+- 생산성 향상을 위한 배움의 과정
+
+  + 프로젝트 관리
+  
+  + 리팩토링
+  
+--
+
+.pull-left[
+
+&lt;img src="images/xavi-cabrera-kn-UmDZQDjM-unsplash.jpg" title="https://unsplash.com/photos/kn-UmDZQDjM" alt="https://unsplash.com/photos/kn-UmDZQDjM" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-right[
+
+&lt;img src="images/mourizal-zativa-gNMVpAPe3PE-unsplash.jpg" title="https://unsplash.com/photos/gNMVpAPe3PE" alt="https://unsplash.com/photos/gNMVpAPe3PE" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+class: center, middle
+
+# 어떻게 시작할까?
+
+
+---
+
+# 어떻게 시작할까?
+
+- 마음가짐: 위축되거나 포기하지 않기
+
+  + 단발성 분석 업무보다 많은 시간과 노력이 소요
+  
+  + 경험의 축적이 중요
+
+  + 자신에게 맞는 기대 수준과 페이스 찾기
+
+--
+
+- 기존에 수행한 간단한 분석 프로젝트로 시작
+
+  + 하나의 데이터, 하나의 함수, 하나의 테스트부터 시작
+
+--
+
+- 분석 업무와 패키지 개발의 선순환
+
+  + 습득한 개발 방법을 분석 업무에 적용
+
+  + 분석 업무에서 패키지 아이디어 확장
+
+
+---
+class: center, middle, inverse
+
+# 감사합니다
+
+# **
+
+#### 특히 고마운 분들: 
+#### 전치혁 교수님
+#### 이혜선 교수님
+#### 이종석 교수님
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "googlecode",
+"highlightLines": true,
+"highlightLanguage": "r",
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<!--Hat-tip: https://www.garrickadenbuie.com/blog/xaringan-tip-logo-all-slides/-->
+<style>
+.logo {
+  background-image: url(images/R-logo-grey--crop.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  width: 110px;
+  height: 128px;
+  z-index: 0;
+}
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"></div>';
+  });
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
