@@ -103,25 +103,15 @@ knitr::include_graphics("images/book-cover.jpg")
 
 ]
 
---
-
 .pull-right[
 
 - 데이터 마이닝 이론과 알고리즘을 잘 이해할 수 있게 깔끔하게 구성된 교재
-{{content}}
-
-]
-
---
 
 - 간단하면서 결과를 눈으로 확인할 수 있는 예제들
-{{content}}
-
---
 
 - **예제 결과 도출을 위한 프로그램 구현은 제공되지 않음**
-{{content}}
 
+]
 
 
 ---
@@ -149,24 +139,13 @@ knitr::include_graphics("images/onlinebook-main.jpg")
 knitr::include_graphics(c("images/Rlogo.png", "images/bookdown-logo.png"))
 ```
 
-  {{content}}
-]
-
---
-
 - 온라인 버전 보조 교재로 활용
-{{content}}
-
---
 
 - 예제를 R로 구현한 내용을 추가
-{{content}}
-
---
 
 - 단순히 기존 R 패키지를 사용하는 것보다 깊이 있는 내용을 제공
-{{content}}
 
+]
 
 ---
 
